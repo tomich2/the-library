@@ -125,13 +125,16 @@ public class Loan{
         int hash = 7;
         hash = 67 * hash + Objects.hashCode(this.id);
         if(loanCreated != null){
-            hash = 67 * hash + Objects.hashCode(this.loanCreated);
+            hash = 67 * hash + loanCreated.hashCode();
         }
         if(loanItems != null){
-            hash = 67 * hash + Objects.hashCode(this.loanItems);
+            hash = 67 * hash + loanItems.hashCode();
         }
         if(loanReturned != null){
-            hash = 67 * hash + Objects.hashCode(this.loanReturned);
+            hash = 67 * hash + loanReturned.hashCode();
+        }
+        if(member != null){
+            hash = 67 * hash + member.hashCode();
         }
         return hash;
     }
