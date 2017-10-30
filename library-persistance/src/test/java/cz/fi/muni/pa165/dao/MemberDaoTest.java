@@ -5,16 +5,13 @@
  */
 package cz.fi.muni.pa165.dao;
 import cz.fi.muni.pa165.library.persistance.config.PersistenceApplicationContext;
-import cz.fi.muni.pa165.library.persistance.dao.BookDao;
 import cz.fi.muni.pa165.library.persistance.dao.MemberDao;
 import cz.fi.muni.pa165.library.persistance.entity.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
