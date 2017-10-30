@@ -124,9 +124,6 @@ public class Loan{
         if(loanCreated != null){
             hash = 67 * hash + loanCreated.hashCode();
         }
-        if(loanItems != null){
-            hash = 67 * hash + loanItems.hashCode();
-        }
         if(loanReturned != null){
             hash = 67 * hash + loanReturned.hashCode();
         }
