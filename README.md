@@ -4,7 +4,6 @@ This is an information system for a public library. The system should keep track
 # Modules
 -----
 The project contains the following modules:
-* <b>api</b> - contains service interfaces and data transfer objects.
 * <b>library-persistance</b> - contains entities with service and dao implementations.
 
 # How to run the project
@@ -16,13 +15,6 @@ library-persistance/src/main/resources/META-INF/persistence.xml
 Then you can build the project simply by executing these commands from the directory where you cloned the project
 ```
 cd the-library
+mvn clean
 mvn install
-```
-To run just enter
-```
-mvn tomcat6:run
-```
-The webpages will be available on the url
-```
-http://localhost:8080/the-library
 ```
