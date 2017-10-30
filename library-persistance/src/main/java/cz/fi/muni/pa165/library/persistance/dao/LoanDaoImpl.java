@@ -4,8 +4,9 @@ package cz.fi.muni.pa165.library.persistance.dao;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
 import java.util.List;
-import java.util.Objects;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
 /**
  *  Implementation of DAO (data access object) for entity class Loan.
