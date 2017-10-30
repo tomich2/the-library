@@ -116,6 +116,21 @@ public class Loan{
             em.close();
         }
     }
+    
+    public void removePersist(Object object){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        try {
+            em.remove(object);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {
