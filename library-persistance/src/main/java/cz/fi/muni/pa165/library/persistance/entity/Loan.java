@@ -2,6 +2,7 @@ package cz.fi.muni.pa165.library.persistance.entity;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -99,36 +100,6 @@ public class Loan{
         loanItems.remove(item);
     }
 
-    public void persist(Object object) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        try {
-            em.persist(object);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-    }
-    
-    public void removePersist(Object object){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        try {
-            em.remove(object);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-    }
-
     @Override
     public boolean equals(Object obj) {
         if(obj == this){
@@ -145,7 +116,23 @@ public class Loan{
         }
         return false;
     }
-    
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        if(loanCreated != null){
+            hash = 67 * hash + loanCreated.hashCode();
+        }
+        if(loanItems != null){
+            hash = 67 * hash + loanItems.hashCode();
+        }
+        if(loanReturned != null){
+            hash = 67 * hash + loanReturned.hashCode();
+        }
+        if(member != null){
+            hash = 67 * hash + member.hashCode();
+        }
+        return hash;
+    }
 }
