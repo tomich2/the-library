@@ -17,6 +17,8 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.instrument.classloading.LoadTimeWeaver;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
@@ -25,7 +27,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackageClasses = {BookDao.class, Book.class}, basePackages = {"cz.fi.muni.pa165"})
+//@ComponentScan(basePackageClasses = {BookDao.class, Book.class}, basePackages = {"cz.fi.muni.pa165"})
+@ComponentScan("cz.fi.muni.pa165")
 public class PersistenceApplicationContext {
 
     /**
@@ -47,7 +50,10 @@ public class PersistenceApplicationContext {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean jpaFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        JpaVendorAdapter vendorAapter = new HibernateJpaVendorAdapter();
         jpaFactoryBean.setDataSource(db());
+        jpaFactoryBean.setJpaVendorAdapter(vendorAapter);
+        jpaFactoryBean.afterPropertiesSet();
         jpaFactoryBean.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
         jpaFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         return jpaFactoryBean;
