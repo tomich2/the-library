@@ -1,17 +1,15 @@
-package cz.fi.muni.pa165.library.service.facade;
+package cz.fi.muni.pa165.facade;
 
 
-import cz.fi.muni.pa165.library.api.dto.CreateLoanDTO;
-import cz.fi.muni.pa165.library.api.dto.LoanDTO;
-import cz.fi.muni.pa165.library.api.exception.LibraryServiceException;
-import cz.fi.muni.pa165.library.api.facade.LoanFacade;
+import cz.fi.muni.pa165.dto.CreateLoanDTO;
+import cz.fi.muni.pa165.dto.LoanDTO;
+import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
-import cz.fi.muni.pa165.library.service.service.BookService;
-import cz.fi.muni.pa165.library.service.service.LoanItemService;
-import cz.fi.muni.pa165.library.service.service.LoanService;
-import cz.fi.muni.pa165.library.service.service.MemberService;
+import cz.fi.muni.pa165.service.LoanItemService;
+import cz.fi.muni.pa165.service.LoanService;
+import cz.fi.muni.pa165.service.MemberService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,16 +30,13 @@ public class LoanFacadeImpl implements LoanFacade {
     private MemberService memberService;
 
     @Inject
-    private BookService bookService;
-
-    @Inject
     private LoanItemService loanItemService;
 
 
     @Override
-    public List<Long> createLoan(CreateLoanDTO loan) throws LibraryServiceException {
+    public List<Long> createLoan(CreateLoanDTO loan) throws IllegalArgumentException {
         if(loan.getMemberId().isEmpty()){
-            throw new LibraryServiceException("No loan book items.");
+            throw new IllegalArgumentException("No loan book items.");
         }
         List<List<Long> > loanItems = loan.getLoanitemIds();
         List<Long> createdLoans = new ArrayList<>();
@@ -73,19 +68,19 @@ public class LoanFacadeImpl implements LoanFacade {
     }
 
     @Override
-    public List<LoanDTO> allLoansOfMember(Long memberId)throws LibraryServiceException {
+    public List<LoanDTO> allLoansOfMember(Long memberId)throws IllegalArgumentException {
         Member member = memberService.findById(memberId);
         if(member == null){
-            throw new LibraryServiceException("Member not found.");
+            throw new IllegalArgumentException("Member not found.");
         }
         return mapper.map(loanService.allLoansOfMember(member), LoanDTO.class);
     }
 
     @Override
-    public void delete(Long loanId) throws LibraryServiceException {
+    public void delete(Long loanId) throws IllegalArgumentException {
         Loan loan = loanService.findById(loanId);
         if(loan == null){
-            throw new LibraryServiceException("Loan not found");
+            throw new IllegalArgumentException("Loan not found");
         }
         loanService.delete(loan);
     }

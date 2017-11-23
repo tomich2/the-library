@@ -1,4 +1,4 @@
-package cz.fi.muni.pa165.library.service.service;
+package cz.fi.muni.pa165.service;
 
 import cz.fi.muni.pa165.library.persistance.dao.LoanDao;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
@@ -14,9 +14,6 @@ import org.springframework.stereotype.Service;
 public class LoanServiceImpl implements LoanService{
     @Inject
     private LoanDao loanDao;
-    
-    @Inject
-    private BookService bookService;
 
     @Override
     public void create(Loan loan) throws IllegalArgumentException {

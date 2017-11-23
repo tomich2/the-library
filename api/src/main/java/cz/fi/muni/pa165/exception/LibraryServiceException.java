@@ -1,4 +1,4 @@
-package cz.fi.muni.pa165.library.api.exception;
+package cz.fi.muni.pa165.exception;
 
 /**
  * Library service exception

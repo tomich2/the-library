@@ -1,4 +1,4 @@
-package cz.fi.muni.pa165.library.api.dto;
+package cz.fi.muni.pa165.dto;
 
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package cz.fi.muni.pa165.library.service.service;
+package cz.fi.muni.pa165.service;
 
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
