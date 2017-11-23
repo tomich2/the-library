@@ -120,15 +120,14 @@ public class Member{
     public void setJoinedDate(Date joinedDate) {
         this.joinedDate = joinedDate;
     }
-    
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.firstName);
-        hash = 79 * hash + Objects.hashCode(this.surname);
-        hash = 79 * hash + Objects.hashCode(this.email);
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.firstName);
+        hash = 97 * hash + Objects.hashCode(this.surname);
+        hash = 97 * hash + Objects.hashCode(this.email);
+        hash = 97 * hash + Objects.hashCode(this.joinedDate);
         return hash;
     }
 
@@ -153,11 +152,14 @@ public class Member{
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.joinedDate, other.joinedDate)) {
             return false;
         }
         return true;
     }
+    
+
+   
     
     
 }
