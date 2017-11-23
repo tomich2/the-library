@@ -55,6 +55,8 @@
     
     <modules>
         <module>library-persistance</module>
+        <module>api</module>
+        <module>service</module>
     </modules>
     <dependencies>
    </dependencies>
