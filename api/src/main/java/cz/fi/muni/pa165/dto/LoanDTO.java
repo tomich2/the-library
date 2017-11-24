@@ -2,6 +2,7 @@ package cz.fi.muni.pa165.dto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * LoanDTO
@@ -9,7 +10,7 @@ import java.util.List;
 public class LoanDTO {
     private Long id;
     private MemberDTO member;
-    private List<LoanItemDTO> loanItems;
+    private Set<LoanItemDTO> loanItems;
     private Date loanCreated;
     private Date loanReturned;
 
@@ -21,7 +22,7 @@ public class LoanDTO {
         return member;
     }
 
-    public List<LoanItemDTO> getLoanItems() {
+    public Set<LoanItemDTO> getLoanItems() {
         return loanItems;
     }
 
@@ -41,7 +42,7 @@ public class LoanDTO {
         this.member = member;
     }
 
-    public void setLoanItems(List<LoanItemDTO> loanItems) {
+    public void setLoanItems(Set<LoanItemDTO> loanItems) {
         this.loanItems = loanItems;
     }
 

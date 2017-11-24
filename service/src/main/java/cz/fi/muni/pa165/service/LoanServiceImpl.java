@@ -18,22 +18,16 @@ public class LoanServiceImpl implements LoanService{
 
     @Override
     public void create(Loan loan) throws DataAccessException {
-        if(loan == null){
+        if(loan == null || loan.getMember() == null || loan.getLoanItems().isEmpty() || loan.getLoanCreated() == null){
             throw new DataAccessException("Loan is null");
-        }
-        if(loanDao == null){
-            throw new DataAccessException("LoanDao not working");
         }
         loanDao.create(loan);
     }
 
     @Override
     public void delete(Loan loan) throws DataAccessException {
-        if(loan == null){
+        if(loan == null || loan.getId() < 0){
             throw new DataAccessException("Loan is null");
-        }
-        if(loanDao == null){
-            throw new DataAccessException("LoanDao not working");
         }
         loanDao.delete(loan);
     }
@@ -43,9 +37,6 @@ public class LoanServiceImpl implements LoanService{
         if(id < 0){
             throw new DataAccessException("Id lower than 0");
         }
-        if(loanDao == null){
-            throw new DataAccessException("LoanDao not working");
-        }
         return loanDao.findById(id);
     }
 
@@ -54,24 +45,18 @@ public class LoanServiceImpl implements LoanService{
         if(member == null){
             throw new DataAccessException("Member is null");
         }
-        if(loanDao == null){
-            throw new DataAccessException("LoanDao not working");
-        }
         return loanDao.allLoansOfMember(member);
     }
 
     @Override
-    public List<Loan> findAll() {
+    public List<Loan> findAll() throws DataAccessException {
         return loanDao.findAll();
     }
 
     @Override
     public void update(Loan loan) throws DataAccessException {
-        if(loan == null){
+        if(loan == null || findById(loan.getId()) == null){
             throw new DataAccessException("Loan is null");
-        }
-        if(loanDao == null){
-            throw new DataAccessException("LoanDao not working");
         }
         loanDao.update(loan);
     }

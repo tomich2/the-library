@@ -1,29 +1,35 @@
 package cz.fi.muni.pa165.dto;
 
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Loan create DTO.
  */
 public class CreateLoanDTO {
 
-    private List<Long> memberId;
-    private List<List<Long> > loanitemIds;
+    @NotBlank
+    private Long memberId;
+    @NotNull
+    private Set<Long> loanitemIds;
 
-    public List<Long> getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(List<Long> memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 
-    public List<List<Long>> getLoanitemIds() {
+    public Set<Long> getLoanitemIds() {
         return loanitemIds;
     }
 
-    public void setLoanitemIds(List<List<Long>> loanitemIds) {
+    public void setLoanitemIds(Set<Long> loanitemIds) {
         this.loanitemIds = loanitemIds;
     }
 

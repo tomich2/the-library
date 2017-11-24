@@ -2,6 +2,7 @@ package cz.fi.muni.pa165.facade;
 
 import cz.fi.muni.pa165.dto.CreateLoanDTO;
 import cz.fi.muni.pa165.dto.LoanDTO;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 
 import java.util.List;
 
@@ -18,33 +19,33 @@ public interface LoanFacade {
      * @return All created Loan ids.
      * @throws IllegalArgumentException If error is caused, exception is thrown.
      */
-    List<Long> createLoan(CreateLoanDTO loan) throws IllegalArgumentException;
+    Long createLoan(CreateLoanDTO loan) throws DataAccessException, IllegalArgumentException;
 
     /**
      * Finding loan by id.
      * @param id Loan id.
      * @return  Loan.
      */
-    LoanDTO findById(Long id);
+    LoanDTO findById(Long id) throws DataAccessException;
 
     /**
      * Finds all loans.
      * @return List of all Loans.
      */
-    List<LoanDTO> findAll();
+    List<LoanDTO> findAll() throws DataAccessException;
 
     /**
      * Return all loans of member.
      * @param memberId Member ID.
      * @return List of all loans belonging to the member.
      */
-    List<LoanDTO> allLoansOfMember(Long memberId) throws IllegalArgumentException;
+    List<LoanDTO> allLoansOfMember(Long memberId) throws DataAccessException;
 
     /**
      * Delete loan by loan ID.
      * @param loanId ID of loan.
      */
-    void delete(Long loanId) throws IllegalArgumentException;
+    void delete(Long loanId) throws DataAccessException;
 
 
 }
