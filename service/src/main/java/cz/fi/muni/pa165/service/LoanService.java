@@ -1,4 +1,4 @@
-package cz.fi.muni.pa165.library.persistance.dao;
+package cz.fi.muni.pa165.service;
 
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
@@ -7,24 +7,24 @@ import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import java.util.List;
 
 /**
- * Database access object (DAO) for entity class Loan.
- * @author Jan Tlamicha (xtlamich)
+ * Service layer for loan entity.
+ *
+ * @author Jan Tlamicha(xtlamich)
  */
-public interface LoanDao {
-    
-    /**
+public interface LoanService {
+     /**
      * Create loan in database
      *
      * @param loan to be created
      */
-    public void create(Loan loan) throws DataAccessException;
+     void create(Loan loan) throws DataAccessException;
 
     /**
      * Delete loan from database
      *
      * @param loan to be deleted
      */
-    public void delete(Loan loan) throws DataAccessException;
+     void delete(Loan loan) throws DataAccessException;
 
     /**
      * Find a loan with specific id from the database
@@ -32,7 +32,7 @@ public interface LoanDao {
      * @param id of loan to be returned
      * @return loan with specified Id 
      */
-    public Loan findById(Long id) throws DataAccessException;
+     Loan findById(Long id) throws DataAccessException;
 
     /**
      * Returns all loans for the specific member 
@@ -41,19 +41,20 @@ public interface LoanDao {
      * @return all loans for specified member 
      */
     
-    public List<Loan> allLoansOfMember(Member member) throws DataAccessException;
+    List<Loan> allLoansOfMember(Member member) throws DataAccessException;
 
     /**
      * Returns all  loans of the member
      *
      * @return all loans 
      */
-    public List<Loan> findAll() throws DataAccessException;
+    List<Loan> findAll() throws DataAccessException;
 
     /**
      * Updates specified loan
      *
      * @param loan to be updated
      */
-    public void update(Loan loan) throws DataAccessException;
+    void update(Loan loan) throws DataAccessException;
+
 }

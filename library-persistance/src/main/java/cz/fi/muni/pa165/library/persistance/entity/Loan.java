@@ -97,6 +97,9 @@ public class Loan{
     }
     
     public void removeLoanItem(LoanItem item){
+        if(loanItems == null){
+            return;
+        }
         loanItems.remove(item);
     }
 

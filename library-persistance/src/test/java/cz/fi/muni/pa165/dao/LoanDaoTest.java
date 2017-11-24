@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -127,13 +129,13 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
     }
     
     
-    @Test(expectedExceptions = {IllegalArgumentException.class})
+    @Test(expectedExceptions = {Exception.class})
     public void deleteNotExisting(){
         loanDao.delete(l1);
     }
     
     
-    @Test(expectedExceptions = {IllegalArgumentException.class})
+    @Test(expectedExceptions = {Exception.class})
     public void deleteNull(){
         loanDao.delete(null);
     }
