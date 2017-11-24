@@ -24,10 +24,7 @@ public class LoanDaoImpl implements LoanDao {
     }
 
     @Override
-    public void delete(Loan loan) throws IllegalArgumentException{
-        if(loan == null){
-            throw new IllegalArgumentException();
-        }
+    public void delete(Loan loan){
         em.remove(findById(loan.getId()));
     }
 

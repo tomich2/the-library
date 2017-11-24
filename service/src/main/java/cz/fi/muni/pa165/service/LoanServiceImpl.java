@@ -6,6 +6,7 @@ import cz.fi.muni.pa165.library.persistance.entity.Member;
 import java.util.List;
 import javax.inject.Inject;
 
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.springframework.stereotype.Service;
 /**
  * @author Jan Tlamicha(xtlamich)
@@ -16,30 +17,45 @@ public class LoanServiceImpl implements LoanService{
     private LoanDao loanDao;
 
     @Override
-    public void create(Loan loan) throws IllegalArgumentException {
+    public void create(Loan loan) throws DataAccessException {
+        if(loan == null){
+            throw new DataAccessException("Loan is null");
+        }
+        if(loanDao == null){
+            throw new DataAccessException("LoanDao not working");
+        }
         loanDao.create(loan);
     }
 
     @Override
-    public void delete(Loan loan) throws IllegalArgumentException {
+    public void delete(Loan loan) throws DataAccessException {
         if(loan == null){
-            throw new IllegalArgumentException("Loan not found");
+            throw new DataAccessException("Loan is null");
+        }
+        if(loanDao == null){
+            throw new DataAccessException("LoanDao not working");
         }
         loanDao.delete(loan);
     }
 
     @Override
-    public Loan findById(Long id) throws IllegalArgumentException {
+    public Loan findById(Long id) throws DataAccessException {
         if(id < 0){
-            throw new IllegalArgumentException("Id lower than 0");
+            throw new DataAccessException("Id lower than 0");
+        }
+        if(loanDao == null){
+            throw new DataAccessException("LoanDao not working");
         }
         return loanDao.findById(id);
     }
 
     @Override
-    public List<Loan> allLoansOfMember(Member member) throws IllegalArgumentException {
+    public List<Loan> allLoansOfMember(Member member) throws DataAccessException {
         if(member == null){
-            throw new IllegalArgumentException("Member is null");
+            throw new DataAccessException("Member is null");
+        }
+        if(loanDao == null){
+            throw new DataAccessException("LoanDao not working");
         }
         return loanDao.allLoansOfMember(member);
     }
@@ -50,9 +66,12 @@ public class LoanServiceImpl implements LoanService{
     }
 
     @Override
-    public void update(Loan loan) throws IllegalArgumentException {
+    public void update(Loan loan) throws DataAccessException {
         if(loan == null){
-            throw new IllegalArgumentException("Loan is null");
+            throw new DataAccessException("Loan is null");
+        }
+        if(loanDao == null){
+            throw new DataAccessException("LoanDao not working");
         }
         loanDao.update(loan);
     }
