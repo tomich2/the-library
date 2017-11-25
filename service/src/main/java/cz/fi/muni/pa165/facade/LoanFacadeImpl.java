@@ -3,10 +3,10 @@ package cz.fi.muni.pa165.facade;
 
 import cz.fi.muni.pa165.dto.CreateLoanDTO;
 import cz.fi.muni.pa165.dto.LoanDTO;
-import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import cz.fi.muni.pa165.service.LoanItemService;
 import cz.fi.muni.pa165.service.LoanService;
 import cz.fi.muni.pa165.service.MemberService;
@@ -34,54 +34,42 @@ public class LoanFacadeImpl implements LoanFacade {
 
 
     @Override
-    public List<Long> createLoan(CreateLoanDTO loan) throws IllegalArgumentException {
-        if(loan.getMemberId().isEmpty()){
+    public Long createLoan(CreateLoanDTO loan) throws DataAccessException, IllegalArgumentException {
+        Member member = memberService.findById(loan.getMemberId());
+        if(member == null || loan.getLoanitemIds().isEmpty()){
             throw new IllegalArgumentException("No loan book items.");
         }
-        List<List<Long> > loanItems = loan.getLoanitemIds();
-        List<Long> createdLoans = new ArrayList<>();
-        int i = 0;
-        for(Long membersId : loan.getMemberId()){
-            Loan newLoan = mapper.map(loan, Loan.class);
-            newLoan.setMember(memberService.findById(membersId));
-            newLoan.setLoanCreated(new Date());
-            List<LoanItem> loanItemList = new ArrayList<>();
-            for(Long loanItemId : loanItems.get(i)){
-                LoanItem item = loanItemService.findById(loanItemId);
-                loanItemList.add(item);
-            }
-            loanService.create(newLoan);
-            createdLoans.add(newLoan.getId());
-            i++;
+        Loan newLoan = mapper.map(loan, Loan.class);
+        newLoan.setMember(member);
+        newLoan.setLoanCreated(new Date());
+        List<LoanItem> loanItemList = new ArrayList<>();
+        for(Long loanItemId : loan.getLoanitemIds()){
+            LoanItem item = loanItemService.findById(loanItemId);
+            loanItemList.add(item);
         }
-        return createdLoans;
+        loanService.create(newLoan);
+        return newLoan.getId();
     }
 
     @Override
-    public LoanDTO findById(Long id) {
+    public LoanDTO findById(Long id) throws DataAccessException {
         return mapper.map(loanService.findById(id), LoanDTO.class);
     }
 
     @Override
-    public List<LoanDTO> findAll() {
+    public List<LoanDTO> findAll() throws DataAccessException {
         return mapper.map(loanService.findAll(), LoanDTO.class);
     }
 
     @Override
-    public List<LoanDTO> allLoansOfMember(Long memberId)throws IllegalArgumentException {
+    public List<LoanDTO> allLoansOfMember(Long memberId)throws DataAccessException {
         Member member = memberService.findById(memberId);
-        if(member == null){
-            throw new IllegalArgumentException("Member not found.");
-        }
         return mapper.map(loanService.allLoansOfMember(member), LoanDTO.class);
     }
 
     @Override
-    public void delete(Long loanId) throws IllegalArgumentException {
+    public void delete(Long loanId) throws DataAccessException {
         Loan loan = loanService.findById(loanId);
-        if(loan == null){
-            throw new IllegalArgumentException("Loan not found");
-        }
         loanService.delete(loan);
     }
 
