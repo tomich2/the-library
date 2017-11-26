@@ -1,5 +1,6 @@
 package cz.fi.muni.pa165.library.persistance.dao;
 
+import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
 import  cz.fi.muni.pa165.library.persistance.entity.Book;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * 
  * @author Martin Palenik
  */
-public interface BookDao {
+public interface BookDao extends CrudDao<Book> {
     
     /**
      * Create a book in the database

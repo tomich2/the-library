@@ -4,7 +4,6 @@ package cz.fi.muni.pa165.dto;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 
 /**

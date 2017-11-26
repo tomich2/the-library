@@ -1,5 +1,7 @@
 package cz.fi.muni.pa165.library.persistance.entity;
 
+import cz.fi.muni.pa165.library.persistance.entity.base.EntityBase;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -24,7 +26,7 @@ import javax.validation.constraints.NotNull;
  * @author xchomo
  */
 @Entity
-public class Loan{
+public class Loan implements EntityBase{
 
     public Loan() {
     }

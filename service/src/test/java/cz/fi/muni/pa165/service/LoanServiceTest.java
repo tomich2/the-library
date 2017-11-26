@@ -1,5 +1,6 @@
 package cz.fi.muni.pa165.service;
 
+import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.dao.LoanDao;
 import cz.fi.muni.pa165.library.persistance.entity.Book;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
@@ -8,17 +9,15 @@ import cz.fi.muni.pa165.library.persistance.entity.Member;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.verification.VerificationMode;
 import org.testng.Assert;
-
-
-import javax.persistence.EntityManager;
 
 import java.util.*;
 
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -32,18 +31,9 @@ public class LoanServiceTest {
     @Mock
     private LoanDao loanDao;
 
-    @Mock
-    private LoanItemService loanItemService;
+    private static final VerificationMode ONCE = times(1);
 
-    @Mock
-    private MemberService memberService;
-
-    @Mock
-    private EntityManager em;
-
-    //@Autowired
-    @InjectMocks
-    private LoanService loanService = new LoanServiceImpl();
+    private LoanService loanService;
 
     private Member member1;
     private Book book1;
@@ -53,6 +43,7 @@ public class LoanServiceTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
+        loanService = new LoanServiceImpl(loanDao);
         member1 = new Member();
         member1.setAddress("address");
         member1.setEmail("aaa@google.com");
@@ -85,30 +76,33 @@ public class LoanServiceTest {
         assert loan1.getId() >= 0;
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = LibraryServiceException.class)
     public void createNullLoan() throws DataAccessException {
+        Mockito.doThrow(DataAccessException.class).when(loanDao).create(null);
         loanService.create(null);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = LibraryServiceException.class)
     public void createNullMember() throws DataAccessException {
+        Mockito.doThrow(DataAccessException.class).when(loanDao).create(loan1);
         loan1.setMember(null);
         loanService.create(loan1);
-        verify(loanDao).create(loan1);
+        verify(loanDao, ONCE).create(loan1);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = LibraryServiceException.class)
     public void deleteNullLoan() throws DataAccessException {
+        Mockito.doThrow(DataAccessException.class).when(loanDao).delete(null);
         loanService.delete(null);
     }
 
     @Test
     public void deleteLoan() throws DataAccessException {
         loanService.delete(loan1);
-        verify(loanDao).delete(loan1);
+        verify(loanDao, ONCE).delete(loan1);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = LibraryServiceException.class)
     public void findByIdNotExist() throws DataAccessException {
         when(loanDao.findById(0L)).thenThrow(DataAccessException.class);
         loanService.findById(0L);
@@ -129,8 +123,9 @@ public class LoanServiceTest {
         Assert.assertEquals(returnedLoans, loans);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = LibraryServiceException.class)
     public void allLoansOfMemberNull() throws DataAccessException {
+        Mockito.doThrow(DataAccessException.class).when(loanDao).allLoansOfMember(null);
         loanService.allLoansOfMember(null);
     }
 
@@ -143,8 +138,9 @@ public class LoanServiceTest {
         Assert.assertEquals(loans, member1.getLoans());
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = LibraryServiceException.class)
     public void updateNull() throws DataAccessException {
+        Mockito.doThrow(DataAccessException.class).when(loanDao).update(null);
         loanService.update(null);
     }
 
@@ -153,7 +149,7 @@ public class LoanServiceTest {
         when(loanDao.findById(loan1.getId())).thenReturn(loan1);
         loan1.setLoanItems(null);
         loanService.update(loan1);
-        verify(loanDao).update(loan1);
+        verify(loanDao, ONCE).update(loan1);
     }
 
 

@@ -1,6 +1,7 @@
 package cz.fi.muni.pa165.facade;
 
 
+import cz.fi.muni.pa165.config.MappingService;
 import cz.fi.muni.pa165.dto.CreateLoanDTO;
 import cz.fi.muni.pa165.dto.LoanDTO;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
@@ -14,31 +15,46 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Set;
+import java.util.List;
+import java.util.HashSet;
+import java.util.Date;
 
+/**
+ * LoanFacade implementation
+ * @author Jan Tlamicha
+ */
 @Service
 @Transactional
 public class LoanFacadeImpl implements LoanFacade {
-    @Inject
-    private ListMapper mapper;
 
+    @Inject
+    private MappingService mappingService;
     @Inject
     private LoanService loanService;
-
     @Inject
     private MemberService memberService;
-
     @Inject
     private LoanItemService loanItemService;
 
+    public LoanFacadeImpl(LoanService loanService,
+                          MemberService memberService,
+                          LoanItemService loanItemService,
+                          MappingService mappingService){
+        this.loanService = loanService;
+        this.mappingService = mappingService;
+        this.memberService = memberService;
+        this.loanItemService = loanItemService;
+    }
+
 
     @Override
-    public Long createLoan(CreateLoanDTO loan) throws DataAccessException, IllegalArgumentException {
+    public Long makeLoan(CreateLoanDTO loan) throws DataAccessException, IllegalArgumentException {
         Member member = memberService.findById(loan.getMemberId());
         if(member == null || loan.getLoanitemIds().isEmpty()){
             throw new IllegalArgumentException("No loan book items.");
         }
-        Loan newLoan = mapper.map(loan, Loan.class);
+        Loan newLoan = mappingService.map(loan, Loan.class);
         newLoan.setMember(member);
         newLoan.setLoanCreated(new Date());
         Set<LoanItem> loanItemList = new HashSet<>();
@@ -53,18 +69,18 @@ public class LoanFacadeImpl implements LoanFacade {
 
     @Override
     public LoanDTO findById(Long id) throws DataAccessException {
-        return mapper.map(loanService.findById(id), LoanDTO.class);
+        return mappingService.map(loanService.findById(id), LoanDTO.class);
     }
 
     @Override
     public List<LoanDTO> findAll() throws DataAccessException {
-        return mapper.map(loanService.findAll(), LoanDTO.class);
+        return mappingService.map(loanService.findAll(), LoanDTO.class);
     }
 
     @Override
     public List<LoanDTO> allLoansOfMember(Long memberId)throws DataAccessException {
         Member member = memberService.findById(memberId);
-        return mapper.map(loanService.allLoansOfMember(member), LoanDTO.class);
+        return mappingService.map(loanService.allLoansOfMember(member), LoanDTO.class);
     }
 
     @Override
