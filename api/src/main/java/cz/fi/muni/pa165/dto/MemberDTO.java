@@ -1,12 +1,11 @@
 package cz.fi.muni.pa165.dto;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
- *
+ * Data Transfer object for Member entity
+ * 
  * @author Tomáš Chomo tchomo
  */
 public class MemberDTO {
@@ -17,19 +16,17 @@ public class MemberDTO {
     private String phone;
     private String address;
     private Date joinedDate;
-        private String email;
+    private String email;
 
-    private Set<LoanDTO> loans = new HashSet<>();
-
+    public MemberDTO() {
+    }
+    
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public MemberDTO() {
     }
 
     public Long getId() {
@@ -79,18 +76,7 @@ public class MemberDTO {
     public void setJoinedDate(Date joinedDate) {
         this.joinedDate = joinedDate;
     }
-        public Set<LoanDTO> getLoans() {
-        return loans;
-    }
-
-    public void setLoans(Set<LoanDTO> loans) {
-        this.loans = loans;
-    }
-
-    public void addLoan(LoanDTO loan) {
-        loans.add(loan);
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 5;
