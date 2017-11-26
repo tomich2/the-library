@@ -4,6 +4,7 @@ package cz.fi.muni.pa165.library.persistance.dao;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -27,7 +28,8 @@ public class LoanDaoImpl implements LoanDao {
 
     @Override
     public void delete(Loan loan) {
-            em.remove(findById(loan.getId()));
+        Objects.requireNonNull(loan, "null argument loan");
+        em.remove(findById(loan.getId()));
     }
 
     @Override
