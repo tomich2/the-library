@@ -17,7 +17,9 @@ public class MemberDTO {
     private String address;
     private Date joinedDate;
     private String email;
-
+    private boolean isAdmin;
+    private String passwordHash;
+    
     public MemberDTO() {
     }
     
@@ -76,6 +78,23 @@ public class MemberDTO {
     public void setJoinedDate(Date joinedDate) {
         this.joinedDate = joinedDate;
     }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+    
     
     @Override
     public int hashCode() {

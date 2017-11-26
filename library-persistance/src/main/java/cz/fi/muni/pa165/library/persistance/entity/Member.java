@@ -75,6 +75,32 @@ public class Member implements EntityBase{
     @Temporal(TemporalType.DATE)        
     private Date joinedDate;
     
+    
+    @Column(nullable = false)
+    private String passwordHash;
+    
+    
+    @Column(nullable = false)
+    private boolean isAdmin = false;
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+    
+    
+    
     public String getFirstName() {
         return firstName;
     }

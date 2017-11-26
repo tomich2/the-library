@@ -30,6 +30,12 @@ public class CreateMemberDTO {
     @Size(max = 100)
     private String address;
     
+    @NotBlank
+    @Size(min = 6, max = 50)
+    private String password;
+
+    private boolean admin;
+    
 
     public String getAddress() {
         return address;
@@ -62,6 +68,23 @@ public class CreateMemberDTO {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+    
 
     @Override
     public int hashCode() {

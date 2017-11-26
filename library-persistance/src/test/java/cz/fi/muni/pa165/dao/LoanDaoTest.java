@@ -77,7 +77,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
         member.setSurname("surname");
         member.setPhone("+420700000000");
         member.setJoinedDate(new Date());
-
+        member.setPasswordHash("hash5");
+        
         em.persist(member);
 
         l1i1 = new LoanItem();
