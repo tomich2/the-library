@@ -9,6 +9,7 @@ import cz.fi.muni.pa165.library.persistance.dao.MemberDao;
 import cz.fi.muni.pa165.library.persistance.entity.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -55,6 +56,7 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests{
         m1.setSurname("surname");
         m1.setPhone("+420700000000");
         m1.setJoinedDate(new Date());
+        m1.setPasswordHash("hash");
         
         m2 = new Member();
         m2.setAddress("address2");
@@ -63,6 +65,7 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests{
         m2.setSurname("surname2");
         m2.setPhone("+420700000001");
         m2.setJoinedDate(new Date());
+        m2.setPasswordHash("hash2");
     }
     
     @Test(expectedExceptions = {org.springframework.dao.InvalidDataAccessApiUsageException.class})

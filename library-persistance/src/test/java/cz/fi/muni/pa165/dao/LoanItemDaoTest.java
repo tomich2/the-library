@@ -66,7 +66,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests{
         member.setSurname("surname");
         member.setPhone("+420700000000");
         member.setJoinedDate(new Date());
-
+        member.setPasswordHash("hash6");
 
         myLoanItemOne = new LoanItem();
 

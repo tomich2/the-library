@@ -23,10 +23,33 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class MemberFacadeImpl extends CrudFacadeImpl<MemberDTO, Member> implements MemberFacade{
-
+    
+    @Inject
+    private ListMapper mapper;
+    
+    @Inject
+    private MemberService service; 
+    
     @Inject
     public MemberFacadeImpl(CrudService<Member> crudService, MappingService mappingService) {
         super(crudService, mappingService, MemberDTO.class, Member.class);
     }
     
+
+    @Override
+    public boolean isAdmin(Long id) {
+         return service.findById(id).isAdmin();
+    }
+
+    @Override
+    public void makeAdmin(Long id) {
+        service.makeAdmin(service.findById(id));
+    }
+
+    @Override
+    public Long registerMember(CreateMemberDTO memberReg) {
+        Member member = mapper.map(memberReg, Member.class);
+        service.registerMember(member, memberReg.getPassword());
+        return member.getId();
+    }
 }
