@@ -1,5 +1,6 @@
 package cz.fi.muni.pa165.facade;
 
+import cz.fi.muni.pa165.config.MappingService;
 import cz.fi.muni.pa165.dto.CreateLoanDTO;
 import cz.fi.muni.pa165.dto.LoanDTO;
 import cz.fi.muni.pa165.library.persistance.entity.Book;
@@ -13,10 +14,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
+import org.mockito.verification.VerificationMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -31,20 +35,22 @@ import static org.mockito.Mockito.*;
  * @author Jan Tlamicha(xtlamich)
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = FacadeTestConfiguration.class)
+@RunWith(MockitoJUnitRunner.class)
 public class LoanFacadeTest {
 
-    @Inject
+    private static VerificationMode ONCE = times(1);
+    @Mock
+    private MappingService mappingService;
+
+    @Mock
     private LoanService loanServiceMock;
 
-    @Inject
+    @Mock
     private LoanItemService loanItemServiceMock;
 
-    @Inject
+    @Mock
     private MemberService memberServiceMock;
 
-    @Inject
     private LoanFacade loanFacade;
 
     private Member member1;
@@ -55,6 +61,7 @@ public class LoanFacadeTest {
     @Before
     public void setUp() throws DataAccessException {
         MockitoAnnotations.initMocks(this);
+        loanFacade = new LoanFacadeImpl(loanServiceMock, memberServiceMock, loanItemServiceMock, mappingService);
         member1 = new Member();
         member1.setAddress("address");
         member1.setEmail("aaa@google.com");
@@ -80,6 +87,7 @@ public class LoanFacadeTest {
         loans.add(loan1);
         member1.setLoans(loans);
 
+        when(mappingService.map(loanItem1, LoanItem.class)).thenReturn(loanItem1);
         when(loanServiceMock.findById(loan1.getId())).thenReturn(loan1);
         when(memberServiceMock.findById(member1.getId())).thenReturn(member1);
         List<Loan> listLoans = new ArrayList<>();
@@ -98,8 +106,9 @@ public class LoanFacadeTest {
         loanItems.add(loanItem1.getId());
         loanCreateDTO.setLoanitemIds(loanItems);
         loanCreateDTO.setMemberId(member1.getId());
-        loanFacade.createLoan(loanCreateDTO);
-        verify(loanServiceMock).create(captor.capture());
+        when(mappingService.map(loanCreateDTO, Loan.class)).thenReturn(loan1);
+        loanFacade.makeLoan(loanCreateDTO);
+        verify(loanServiceMock, ONCE).create(captor.capture());
         Loan entity = captor.getValue();
         Assert.assertSame(member1, entity.getMember());
         Assert.assertEquals(loan1.getLoanItems(), entity.getLoanItems());
@@ -107,22 +116,39 @@ public class LoanFacadeTest {
 
     @Test
     public void testFindById() throws DataAccessException {
-        LoanDTO dto = loanFacade.findById(1L);
+        when(loanServiceMock.findById(loan1.getId())).thenReturn(loan1);
+        LoanDTO mockDTo = new LoanDTO();
+        mockDTo.setId(loan1.getId());
+        when(mappingService.map(loan1, LoanDTO.class)).thenReturn(mockDTo);
+        LoanDTO dto = loanFacade.findById(loan1.getId());
         Assert.assertEquals(dto.getId(), loan1.getId());
-        Assert.assertEquals(dto.getMember().getId(), loan1.getMember().getId());
     }
 
     @Test
     public void testFindAll() throws DataAccessException {
+        List<Loan> loans = new ArrayList<>();
+        loans.add(loan1);
+        LoanDTO dto = new LoanDTO();
+        dto.setId(loan1.getId());
+        List<LoanDTO> mockdtos = new ArrayList<>();
+        mockdtos.add(dto);
+        when(mappingService.map(loans, LoanDTO.class)).thenReturn(mockdtos);
+        when(loanServiceMock.findAll()).thenReturn(loans);
         List<LoanDTO> dtos = loanFacade.findAll();
         Assert.assertEquals(1, dtos.size());
-        Loan loadFromDTO = new Loan();
-        loadFromDTO.setId(loan1.getId());
-        Assert.assertEquals(loadFromDTO.getId(), loan1.getId());
+        Assert.assertEquals(dtos.get(0).getId(), loan1.getId());
     }
 
     @Test
     public void testAllLoansOfMember() throws DataAccessException{
+        List<Loan> mockloans = new ArrayList<>();
+        mockloans.addAll(member1.getLoans());
+        when(loanServiceMock.allLoansOfMember(member1)).thenReturn(mockloans);
+        List<LoanDTO> dtos = new ArrayList<>();
+        LoanDTO dto = new LoanDTO();
+        dto.setId(loan1.getId());
+        dtos.add(dto);
+        when(mappingService.map(mockloans, LoanDTO.class)).thenReturn(dtos);
         List<LoanDTO> loans = loanFacade.allLoansOfMember(member1.getId());
         Assert.assertEquals(loan1.getId(),loans.get(0).getId());
     }
@@ -130,7 +156,7 @@ public class LoanFacadeTest {
     @Test
     public void testDelete() throws DataAccessException {
         loanFacade.delete(loan1.getId());
-        verify(loanServiceMock).delete(loan1);
+        verify(loanServiceMock, ONCE).delete(loan1);
     }
 
 

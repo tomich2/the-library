@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.springframework.stereotype.Repository;
 /**
  * Implementation of Member DAO interface with basic CRUD operations
@@ -19,29 +21,49 @@ public class MemberDaoImpl implements MemberDao {
     private EntityManager em;
 
     @Override
-    public void create(Member member) {
-        em.persist(member);
+    public void create(Member member) throws DataAccessException {
+        try{
+            em.persist(member);
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public void delete(Member member) {
-        Objects.requireNonNull(member, "null argument member");
-         em.remove(findById(member.getId()));
+    public void delete(Member member) throws DataAccessException {
+        try{
+            Objects.requireNonNull(member, "null argument member");
+             em.remove(findById(member.getId()));
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public void update(Member member) {
-         em.merge(member);
+    public void update(Member member) throws DataAccessException {
+        try{
+        em.merge(member);
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class).getResultList();
+    public List<Member> findAll() throws DataAccessException {
+        try{
+            return em.createQuery("select m from Member m", Member.class).getResultList();
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public Member findById(Long id) {
-        return em.find(Member.class, id);
+    public Member findById(Long id) throws DataAccessException {
+        try{
+            return em.find(Member.class, id);
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
     
 }

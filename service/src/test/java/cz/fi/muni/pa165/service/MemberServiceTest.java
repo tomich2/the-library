@@ -4,6 +4,7 @@ import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.dao.MemberDao;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
 
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,7 @@ public class MemberServiceTest {
     }    
    
     @Test
-    public void createTest() {
+    public void createTest() throws DataAccessException {
         Long memberId = memberService.create(member);
         Mockito.verify(memberDao, ONCE).create(member);
         Assert.assertEquals(member.getId(), memberId);
@@ -52,37 +53,37 @@ public class MemberServiceTest {
     
     
     @Test(expected = LibraryServiceException.class)
-    public void createWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void createWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(memberDao).create(member);
         memberService.create(member);
     }
     
     @Test
-    public void updateTest() {
+    public void updateTest() throws DataAccessException {
         memberService.update(member);
         Mockito.verify(memberDao, ONCE).update(member);
     }
     
     @Test(expected = LibraryServiceException.class)
-    public void updateWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void updateWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(memberDao).update(member);
         memberService.update(member);
     }
 
     @Test
-    public void deleteTest() {
+    public void deleteTest() throws DataAccessException {
         memberService.delete(member);
         Mockito.verify(memberDao, ONCE).delete(member);
     }
 
     @Test(expected = LibraryServiceException.class)
-    public void deleteWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void deleteWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(memberDao).delete(member);
         memberService.delete(member);
     }
 
     @Test
-    public void findByIdTest() {
+    public void findByIdTest() throws DataAccessException {
         Mockito.when(memberService.findById(member.getId())).thenReturn(member);
         Member foundMemberItem = memberService.findById(member.getId());
 
@@ -91,13 +92,13 @@ public class MemberServiceTest {
     }
 
     @Test(expected = LibraryServiceException.class)
-    public void findByIdWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void findByIdWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(memberDao).findById(member.getId());
         memberService.findById(member.getId());
     }
 
     @Test
-    public void findAllTest() {
+    public void findAllTest() throws DataAccessException {
         List<Member> memberList = new ArrayList<Member>();
         memberList.add(member);
         Mockito.when(memberService.findAll()).thenReturn(memberList);
@@ -108,7 +109,7 @@ public class MemberServiceTest {
     }
 
     @Test(expected = LibraryServiceException.class)
-    public void findAllWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void findAllWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(memberDao).findAll();
         memberService.findAll();
     }

@@ -19,7 +19,7 @@ public interface MappingService {
      * @param <T>
      * @return mapped collection
      */
-    public <T> List<T> map(Collection<?> objects, Class<T> mapToClass);
+    <T> List<T> map(Collection<?> objects, Class<T> mapToClass);
 
     /**
      * Maps object to object of other type
@@ -29,5 +29,5 @@ public interface MappingService {
      * @param <T>
      * @return mapped object
      */
-    public  <T> T map(Object object, Class<T> mapToClass);
+    <T> T map(Object object, Class<T> mapToClass);
 }

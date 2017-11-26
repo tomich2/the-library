@@ -3,6 +3,7 @@ package cz.fi.muni.pa165.library.persistance.dao;
 import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 
 import java.util.List;
 
@@ -18,21 +19,21 @@ public interface LoanItemDao extends CrudDao<LoanItem> {
      *
      * @param loanItem item to be created
      */
-    public void create(LoanItem loanItem);
+    void create(LoanItem loanItem) throws DataAccessException;
 
     /**
      * Removes LoanItem from persistence context
      *
      * @param loanItem item to be deleted
      */
-    public void delete(LoanItem loanItem);
+    void delete(LoanItem loanItem) throws DataAccessException;
 
     /**
      * Updates persisted LoanItem
      *
      * @param loanItem item to be updated
      */
-    public void update(LoanItem loanItem);
+    void update(LoanItem loanItem) throws DataAccessException;
 
     /**
      * Finds LoanItem by his id
@@ -40,7 +41,7 @@ public interface LoanItemDao extends CrudDao<LoanItem> {
      * @param id the specified id
      * @return LoanItem with given id or null if not found
      */
-    public LoanItem findById(Long id);
+    LoanItem findById(Long id) throws DataAccessException;
 
     /**
      * Finds all LoanItems which belongs to given loan
@@ -48,12 +49,12 @@ public interface LoanItemDao extends CrudDao<LoanItem> {
      * @param loan the given loan
      * @return list of LoanItems
      */
-    public List<LoanItem> findByLoan(Loan loan);
+    List<LoanItem> findByLoan(Loan loan) throws DataAccessException;
 
     /**
      * Finds all LoanItems from the database
      *
      * @return list of all LoanItems
      */
-    public List<LoanItem> findAll();
+    List<LoanItem> findAll() throws DataAccessException;
 }

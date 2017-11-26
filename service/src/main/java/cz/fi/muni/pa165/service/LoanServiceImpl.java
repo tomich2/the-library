@@ -1,5 +1,6 @@
 package cz.fi.muni.pa165.service;
 
+import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.dao.LoanDao;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
@@ -26,10 +27,14 @@ public class LoanServiceImpl extends CrudServiceImpl<Loan> implements LoanServic
 
     @Override
     public List<Loan> allLoansOfMember(Member member) throws DataAccessException {
-        if(member == null){
-            throw new DataAccessException("Member is null");
+        try {
+            if (member == null) {
+                throw new DataAccessException("Member is null");
+            }
+            return loanDao.allLoansOfMember(member);
+        } catch (Exception ex){
+            throw new LibraryServiceException("Problem with data", ex);
         }
-        return loanDao.allLoansOfMember(member);
     }
 
 }
