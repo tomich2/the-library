@@ -7,8 +7,9 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- *
- * @author tchomo
+ * Data Transfer object for creating a Member entity
+ * 
+ * @author Tomáš Chomo tchomo
  */
 public class CreateMemberDTO {
    
@@ -28,6 +29,7 @@ public class CreateMemberDTO {
     @NotBlank
     @Size(max = 100)
     private String address;
+    
 
     public String getAddress() {
         return address;
