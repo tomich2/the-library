@@ -16,11 +16,17 @@ import org.testng.Assert;
 
 
 import javax.persistence.EntityManager;
+
 import java.util.*;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * LoanService unit test.
+ * All used DAOs mocked.
+ * @author Jan Tlamicha(xtlamich)
+ */
 public class LoanServiceTest {
 
     @Mock

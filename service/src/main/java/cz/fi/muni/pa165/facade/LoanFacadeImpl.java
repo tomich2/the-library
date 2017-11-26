@@ -14,9 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 @Service
 @Transactional
 public class LoanFacadeImpl implements LoanFacade {
@@ -42,11 +41,12 @@ public class LoanFacadeImpl implements LoanFacade {
         Loan newLoan = mapper.map(loan, Loan.class);
         newLoan.setMember(member);
         newLoan.setLoanCreated(new Date());
-        List<LoanItem> loanItemList = new ArrayList<>();
+        Set<LoanItem> loanItemList = new HashSet<>();
         for(Long loanItemId : loan.getLoanitemIds()){
             LoanItem item = loanItemService.findById(loanItemId);
             loanItemList.add(item);
         }
+        newLoan.setLoanItems(loanItemList);
         loanService.create(newLoan);
         return newLoan.getId();
     }

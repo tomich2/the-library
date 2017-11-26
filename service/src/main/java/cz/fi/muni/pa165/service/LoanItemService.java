@@ -1,10 +1,8 @@
 package cz.fi.muni.pa165.service;
 
 import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
-import cz.fi.muni.pa165.library.persistance.entity.Member;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 
-public class LoanItemService {
-    public LoanItem findById(Long memberId){
-        return null;
-    }
+public interface LoanItemService {
+    LoanItem findById(Long loanItemId) throws DataAccessException;
 }
