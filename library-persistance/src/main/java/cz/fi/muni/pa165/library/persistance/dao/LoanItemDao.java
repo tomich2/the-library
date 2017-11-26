@@ -1,5 +1,6 @@
 package cz.fi.muni.pa165.library.persistance.dao;
 
+import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Database access object (DAO) for entity class LoanItem.
  * @author mcada
  */
-public interface LoanItemDao {
+public interface LoanItemDao extends CrudDao<LoanItem> {
 
     /**
      * Persists new LoanItem into persistence context

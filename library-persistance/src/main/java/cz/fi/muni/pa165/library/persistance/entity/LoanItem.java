@@ -1,5 +1,7 @@
 package cz.fi.muni.pa165.library.persistance.entity;
 
+import cz.fi.muni.pa165.library.persistance.entity.base.EntityBase;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * @author mcada
  */
 @Entity
-public class LoanItem{
+public class LoanItem implements EntityBase{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
