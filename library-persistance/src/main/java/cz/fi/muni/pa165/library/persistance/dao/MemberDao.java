@@ -1,4 +1,5 @@
 package cz.fi.muni.pa165.library.persistance.dao;
+import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
 import  cz.fi.muni.pa165.library.persistance.entity.Member;
 import java.util.List;
 /**
@@ -6,7 +7,7 @@ import java.util.List;
  * 
  * @author Tomas Chomo (xchomo)
  */
-public interface MemberDao {
+public interface MemberDao extends CrudDao<Member> {
  
     /**
      * Create a member in the database

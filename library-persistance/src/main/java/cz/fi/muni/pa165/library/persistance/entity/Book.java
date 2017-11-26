@@ -1,5 +1,7 @@
 package cz.fi.muni.pa165.library.persistance.entity;
 
+import cz.fi.muni.pa165.library.persistance.entity.base.EntityBase;
+
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +17,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-public class Book{
+public class Book implements EntityBase {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -57,10 +59,6 @@ public class Book{
         this.title = title;
     }
     
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -98,4 +96,8 @@ public class Book{
         return true;
     }
 
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 }

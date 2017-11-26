@@ -1,8 +1,10 @@
 package cz.fi.muni.pa165.facade;
 
 
+import cz.fi.muni.pa165.config.MappingService;
 import cz.fi.muni.pa165.dto.CreateLoanDTO;
 import cz.fi.muni.pa165.dto.LoanDTO;
+import cz.fi.muni.pa165.facade.base.CrudFacadeImpl;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
@@ -19,7 +21,13 @@ import java.util.Date;
 import java.util.List;
 @Service
 @Transactional
-public class LoanFacadeImpl implements LoanFacade {
+public class LoanFacadeImpl extends CrudFacadeImpl<LoanDTO, Loan> implements LoanFacade {
+
+    @Inject
+    public LoanFacadeImpl(LoanService loanService, MappingService mappingService) {
+        super(loanService, mappingService, LoanDTO.class, Loan.class);
+    }
+
     @Inject
     private ListMapper mapper;
 
@@ -34,43 +42,11 @@ public class LoanFacadeImpl implements LoanFacade {
 
 
     @Override
-    public Long createLoan(CreateLoanDTO loan) throws DataAccessException, IllegalArgumentException {
-        Member member = memberService.findById(loan.getMemberId());
-        if(member == null || loan.getLoanitemIds().isEmpty()){
-            throw new IllegalArgumentException("No loan book items.");
-        }
-        Loan newLoan = mapper.map(loan, Loan.class);
-        newLoan.setMember(member);
-        newLoan.setLoanCreated(new Date());
-        List<LoanItem> loanItemList = new ArrayList<>();
-        for(Long loanItemId : loan.getLoanitemIds()){
-            LoanItem item = loanItemService.findById(loanItemId);
-            loanItemList.add(item);
-        }
-        loanService.create(newLoan);
-        return newLoan.getId();
-    }
-
-    @Override
-    public LoanDTO findById(Long id) throws DataAccessException {
-        return mapper.map(loanService.findById(id), LoanDTO.class);
-    }
-
-    @Override
-    public List<LoanDTO> findAll() throws DataAccessException {
-        return mapper.map(loanService.findAll(), LoanDTO.class);
-    }
-
-    @Override
     public List<LoanDTO> allLoansOfMember(Long memberId)throws DataAccessException {
         Member member = memberService.findById(memberId);
         return mapper.map(loanService.allLoansOfMember(member), LoanDTO.class);
     }
 
-    @Override
-    public void delete(Long loanId) throws DataAccessException {
-        Loan loan = loanService.findById(loanId);
-        loanService.delete(loan);
-    }
+
 
 }
