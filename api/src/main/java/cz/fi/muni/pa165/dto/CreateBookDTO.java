@@ -1,28 +1,22 @@
 package cz.fi.muni.pa165.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * Data Transfer object for Book entity
+ * Data Transfer object for creating a Book entity
  * 
  * @author Martin Palenik
  */
-public class BookDTO {
-    
-    private Long id;
-    private String author;
+public class CreateBookDTO {
+    @NotBlank
+    @Size(max = 150)
     private String title;
     
-    public BookDTO() {
-    }
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @NotBlank
+    @Size(max = 100)
+    private String author;
 
     public String getAuthor() {
         return this.author;
@@ -39,18 +33,17 @@ public class BookDTO {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 8;
         hash = 52 * hash + Objects.hashCode(this.title);
-        hash = 52 * hash + Objects.hashCode(this.author);
-        hash = 52 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
+        
         if (this == obj) {
             return true;
         }
@@ -63,20 +56,12 @@ public class BookDTO {
             return false;
         }
         
-        final BookDTO other = (BookDTO) obj;
+        final CreateBookDTO other = (CreateBookDTO) obj;
         
         if (!Objects.equals(this.title, other.title)) {
             return false;
         }
         
-        if (!Objects.equals(this.author, other.author)) {
-            return false;
-        }
-        
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-
         return true;
     }
 }
