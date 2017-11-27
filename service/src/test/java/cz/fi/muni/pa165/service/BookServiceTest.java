@@ -114,4 +114,9 @@ public class BookServiceTest {
         Mockito.doThrow(RuntimeException.class).when(bookDao).findAll();
         bookService.findAll();
     }
+    
+    @Test(expected = LibraryServiceException.class)
+    public void getAllBooksLoanedAfterDateNull() throws DataAccessException {
+        bookService.getAllBooksLoanedAfterDate(null);
+    }
 }
