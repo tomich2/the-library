@@ -1,5 +1,6 @@
 package cz.fi.muni.pa165.service;
 
+import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.dao.BookDao;
 import cz.fi.muni.pa165.library.persistance.dao.LoanDao;
 import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
@@ -33,16 +34,24 @@ public class BookServiceImpl extends CrudServiceImpl<Book> implements BookServic
 
     @Override
     public Set<Book> getAllBooksLoanedAfterDate(Date date) throws DataAccessException {
-        Set<Book> loanedBooks = new HashSet<>();
+        try {
+            if (date == null) {
+                throw new DataAccessException("Date is null");
+            }
+            
+            Set<Book> loanedBooks = new HashSet<>();
 
-        //maybe we can support this search via DAO and db query so it is faster
-        for(Loan loan : loanDao.findAll()) {
-            if(loan.getLoanCreated().after(date)) {
-                for (LoanItem item : loan.getLoanItems()) {
-                    loanedBooks.add(item.getBook());
+            //maybe we can support this search via DAO and db query so it is faster
+            for(Loan loan : loanDao.findAll()) {
+                if(loan.getLoanCreated().after(date)) {
+                    for (LoanItem item : loan.getLoanItems()) {
+                        loanedBooks.add(item.getBook());
+                    }
                 }
             }
-        }
-        return loanedBooks;
+            return loanedBooks;
+        } catch (Exception ex){
+            throw new LibraryServiceException("Problem with data", ex);
+        }  
     }
 }
