@@ -2,7 +2,6 @@ package cz.fi.muni.pa165.service;
 import  cz.fi.muni.pa165.library.persistance.entity.Member;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import cz.fi.muni.pa165.service.base.CrudService;
-import java.util.List;
 import org.springframework.stereotype.Service;
 /**
  *

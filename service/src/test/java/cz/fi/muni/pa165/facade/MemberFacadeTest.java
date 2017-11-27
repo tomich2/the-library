@@ -2,7 +2,6 @@ package cz.fi.muni.pa165.facade;
 
 import cz.fi.muni.pa165.config.MappingService;
 import cz.fi.muni.pa165.dto.MemberDTO;
-import cz.fi.muni.pa165.dto.CreateMemberDTO;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
 import cz.fi.muni.pa165.service.MemberService;
 
@@ -17,10 +16,6 @@ import org.mockito.verification.VerificationMode;
 
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import org.mockito.ArgumentCaptor;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

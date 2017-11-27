@@ -19,6 +19,10 @@ import java.util.List;
 
 import static org.mockito.Mockito.times;
 
+/**
+ * LoanItemService test.
+ * @author Michael Cada
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class LoanItemServiceTest {
 
