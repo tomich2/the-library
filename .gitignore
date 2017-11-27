@@ -1,2 +1,4 @@
 /api/target/
 .idea/
+/library-persistance/target/
+/service/target/
