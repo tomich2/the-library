@@ -1,6 +1,7 @@
 package cz.fi.muni.pa165.facade;
 import cz.fi.muni.pa165.dto.*;
 import cz.fi.muni.pa165.facade.base.CrudFacade;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 
 
 /**
@@ -24,7 +25,7 @@ public interface MemberFacade extends CrudFacade<MemberDTO> {
      * @param memberReg DTO object containing registration data
      * @return id of new member
      */
-    Long registerMember(CreateMemberDTO memberReg);
+    Long registerMember(CreateMemberDTO memberReg) throws DataAccessException;
     
     /**
      * Checks if member has admin permissions
@@ -38,6 +39,6 @@ public interface MemberFacade extends CrudFacade<MemberDTO> {
      * Makes user admin
      * @param id of user
      */
-    void makeAdmin(Long id);
+    void makeAdmin(Long id) throws DataAccessException;
     
 }
