@@ -127,10 +127,7 @@ public class MemberDTO {
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }
-        if (!Objects.equals(this.joinedDate, other.joinedDate)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.joinedDate, other.joinedDate);
     }
     
     

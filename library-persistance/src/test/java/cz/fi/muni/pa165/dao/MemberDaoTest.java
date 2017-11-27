@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -68,20 +70,20 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests{
         m2.setPasswordHash("hash2");
     }
     
-    @Test(expectedExceptions = {org.springframework.dao.InvalidDataAccessApiUsageException.class})
-    public void createNull(){
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void createNull() throws DataAccessException{
         memberDao.create(null);
     }
     
     @Test
-    public void create(){
+    public void create() throws DataAccessException{
         memberDao.create(m1);
         List<Member> members = em.createQuery("select m from Member m where m.id=:id", Member.class).setParameter("id", m1.getId()).getResultList();
         Assert.assertEquals(m1, members.get(0));
     }
     
     @Test
-    public void delete(){
+    public void delete() throws DataAccessException {
 
         List<Member> membersMock = new ArrayList<>();
 
@@ -99,13 +101,13 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests{
         Assert.assertEquals(members.size(), 0);
     }
     
-    @Test(expectedExceptions = {org.springframework.dao.InvalidDataAccessApiUsageException.class})
-    public void deleteNotExisting(){
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void deleteNotExisting() throws DataAccessException{
         memberDao.delete(m1);
     }
     
     @Test
-    public void findById(){
+    public void findById() throws DataAccessException{
 
         em.persist(m1);
         em.persist(m2);
@@ -121,7 +123,7 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests{
     }
     
     @Test
-    public void update(){
+    public void update() throws DataAccessException{
 
         em.persist(m1);
         em.persist(m2);
@@ -140,7 +142,7 @@ public class MemberDaoTest extends AbstractTestNGSpringContextTests{
     }
     
      @Test
-    public void findAll(){
+    public void findAll() throws DataAccessException{
         List<Member> membersMock = new ArrayList<>();
         em.persist(m1);
         em.persist(m2);

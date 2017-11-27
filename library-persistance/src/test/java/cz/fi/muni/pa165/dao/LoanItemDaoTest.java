@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -95,13 +97,13 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests{
         em.persist(loanTwo);
     }
 
-    @Test(expectedExceptions = {org.springframework.dao.InvalidDataAccessApiUsageException.class})
-    public void createNull(){
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void createNull() throws DataAccessException{
         loanItemDao.create(null);
     }
 
     @Test
-    public void create(){
+    public void create() throws DataAccessException{
 
         loanItemDao.create(myLoanItemOne);
 
@@ -111,7 +113,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void delete(){
+    public void delete() throws DataAccessException{
         List<LoanItem> loanItemsMock = new ArrayList<>();
 
         em.persist(myLoanItemOne);
@@ -125,18 +127,18 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests{
         Assert.assertEquals(loanItems.size(), 0);
     }
 
-    @Test(expectedExceptions = {org.springframework.dao.InvalidDataAccessApiUsageException.class})
-    public void deleteNotExisting(){
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void deleteNotExisting() throws DataAccessException{
         loanItemDao.delete(myLoanItemOne);
     }
 
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void deleteNull(){
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void deleteNull() throws DataAccessException{
         loanItemDao.delete(null);
     }
 
     @Test
-    public void update(){
+    public void update() throws DataAccessException{
 
         em.persist(myLoanItemOne);
 
@@ -165,7 +167,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void findAll(){
+    public void findAll() throws DataAccessException{
         List<LoanItem> loanItemsMock = new ArrayList<>();
 
 
@@ -177,7 +179,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void findById(){
+    public void findById() throws DataAccessException{
         em.persist(myLoanItemOne);
 
         List<LoanItem> loanItems = em.createQuery("select l from LoanItem l where l.id=:id", LoanItem.class).setParameter("id", myLoanItemOne.getId()).getResultList();
@@ -187,7 +189,7 @@ public class LoanItemDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void findByLoan(){
+    public void findByLoan() throws DataAccessException{
         em.persist(myLoanItemOne);
         LoanItem loanFound = loanItemDao.findById(myLoanItemOne.getId());
         Assert.assertEquals(loanFound, myLoanItemOne);

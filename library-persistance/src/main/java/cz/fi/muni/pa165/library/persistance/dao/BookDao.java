@@ -2,6 +2,8 @@ package cz.fi.muni.pa165.library.persistance.dao;
 
 import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
 import  cz.fi.muni.pa165.library.persistance.entity.Book;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
+
 import java.util.List;
 
 /**
@@ -16,28 +18,28 @@ public interface BookDao extends CrudDao<Book> {
      *
      * @param book to be created
      */
-    public void create(Book book);
+    void create(Book book) throws DataAccessException;
     
     /**
      * Delete the book from the database
      *
      * @param book to be deleted
      */
-    public void delete(Book book);
+    void delete(Book book) throws DataAccessException;
     
     /**
      * Update a book information in the database
      *
      * @param book to be created
      */
-    public void update(Book book);
+    void update(Book book) throws DataAccessException;
     
     /**
      * Find all book in the database
      *
      * @return List of Books
      */
-    public List<Book> findAll();
+    List<Book> findAll() throws DataAccessException;
     
     /**
      * Find a book with specific id from the database
@@ -45,6 +47,6 @@ public interface BookDao extends CrudDao<Book> {
      * @param id of the book
      * @return book with the given id
      */
-    public Book findById(Long id);
+    Book findById(Long id) throws DataAccessException;
     
 }

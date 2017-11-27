@@ -1,5 +1,7 @@
 package cz.fi.muni.pa165.library.persistance.dao.base;
 
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
+
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ public interface CrudDao<TEntity> {
      *
      * @return all entities
      */
-    List<TEntity> findAll();
+    List<TEntity> findAll() throws DataAccessException;
 
     /**
      * Finds entity by id
@@ -22,26 +24,26 @@ public interface CrudDao<TEntity> {
      * @param id Id of entity
      * @return found entity
      */
-    TEntity findById(Long id);
+    TEntity findById(Long id) throws DataAccessException;
 
     /**
      * Creates new entity
      *
      * @param entity to create
      */
-    void create(TEntity entity);
+    void create(TEntity entity) throws DataAccessException;
 
     /**
      * Deletes entity
      *
      * @param entity
      */
-    void delete(TEntity entity);
+    void delete(TEntity entity) throws DataAccessException;
 
     /**
      * Updates entity
      *
      * @param entity
      */
-    void update(TEntity entity);
+    void update(TEntity entity) throws DataAccessException;
 }

@@ -1,6 +1,8 @@
 package cz.fi.muni.pa165.library.persistance.dao;
 import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
 import  cz.fi.muni.pa165.library.persistance.entity.Member;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
+
 import java.util.List;
 /**
  *  Data access object (DAO) Interface for Member class
@@ -14,28 +16,28 @@ public interface MemberDao extends CrudDao<Member> {
      *
      * @param member to be created
      */
-    public void create(Member member);
+    void create(Member member) throws DataAccessException;
     
     /**
      * Delete the member from the database
      *
      * @param member to be deleted
      */
-    public void delete(Member member);
+    void delete(Member member) throws DataAccessException;
     
     /**
      * Update a member information in the database
      *
      * @param member to be created
      */
-    public void update(Member member);
+    void update(Member member) throws DataAccessException;
     
     /**
      * Find all members in the database
      *
      * @return List of members
      */
-    public List<Member> findAll();
+    List<Member> findAll() throws DataAccessException;
     
     /**
      * Find a member with specific id from the database
@@ -43,5 +45,5 @@ public interface MemberDao extends CrudDao<Member> {
      * @param id of the member
      * @return member with the given id
      */
-    public Member findById(Long id); 
+    Member findById(Long id) throws DataAccessException;
 }

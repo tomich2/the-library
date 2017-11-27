@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -46,14 +48,14 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests{
     }
     
     
-    @Test(expectedExceptions = {org.springframework.dao.InvalidDataAccessApiUsageException.class})
-    public void createNull(){
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void createNull() throws DataAccessException {
         bookDao.create(null);
     }
     
     
     @Test
-    public void create(){
+    public void create() throws DataAccessException {
         bookDao.create(b1);
         
         //em = emf.createEntityManager();
@@ -67,7 +69,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests{
     }
     
     @Test
-    public void createMultipleCopyOfSameBooks(){
+    public void createMultipleCopyOfSameBooks() throws DataAccessException {
         Book b1copy = new Book(b1.getAuthor(), b1.getTitle());
         bookDao.create(b1);
         bookDao.create(b1copy);
@@ -83,7 +85,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests{
     }
     
     @Test
-    public void delete(){
+    public void delete() throws DataAccessException {
 
         List<Book> booksMock = new ArrayList<>();
 
@@ -101,13 +103,13 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests{
         Assert.assertEquals(books.size(), 0);
     }
     
-    @Test(expectedExceptions = {org.springframework.dao.InvalidDataAccessApiUsageException.class})
-    public void deleteNotExisting(){
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void deleteNotExisting() throws DataAccessException {
         bookDao.delete(b1);
     }
     
     @Test
-    public void findById(){
+    public void findById() throws DataAccessException {
 
         em.persist(b1);
         em.persist(b2);
@@ -123,7 +125,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests{
     }
     
     @Test
-    public void update(){
+    public void update() throws DataAccessException {
 
         em.persist(b1);
         em.persist(b2);
@@ -143,7 +145,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void findAll(){
+    public void findAll() throws DataAccessException {
         List<Book> booksMock = new ArrayList<>();
         em.persist(b1);
         em.persist(b2);

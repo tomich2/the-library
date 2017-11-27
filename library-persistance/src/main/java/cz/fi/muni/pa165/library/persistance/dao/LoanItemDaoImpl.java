@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -21,38 +22,62 @@ public class LoanItemDaoImpl implements LoanItemDao {
     private EntityManager em;
 
     @Override
-    public void create(LoanItem loanItem) {
-        em.persist(loanItem);
+    public void create(LoanItem loanItem) throws DataAccessException {
+        try{
+            em.persist(loanItem);
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public void delete(LoanItem loanItem) {
-        Objects.requireNonNull(loanItem, "null argument loanItem");
-        em.remove(findById(loanItem.getId()));
+    public void delete(LoanItem loanItem) throws DataAccessException {
+        try{
+            Objects.requireNonNull(loanItem, "null argument loanItem");
+            em.remove(findById(loanItem.getId()));
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
 
 
     @Override
-    public void update(LoanItem loanItem) {
-        em.merge(loanItem);
+    public void update(LoanItem loanItem) throws DataAccessException {
+        try{
+            em.merge(loanItem);
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public LoanItem findById(Long id) {
-        return em.find(LoanItem.class, id);
+    public LoanItem findById(Long id) throws DataAccessException {
+        try{
+            return em.find(LoanItem.class, id);
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public List<LoanItem> findByLoan(Loan loan) {
+    public List<LoanItem> findByLoan(Loan loan) throws DataAccessException {
+        try{
         return em.createQuery("SELECT l FROM LoanItem l WHERE l.loan = :loanid", LoanItem.class)
                 .setParameter("loanid", loan)
                 .getResultList();
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
     @Override
-    public List<LoanItem> findAll() {
-        return em.createQuery("select l from LoanItem l", LoanItem.class).getResultList();
+    public List<LoanItem> findAll() throws DataAccessException {
+        try{
+            return em.createQuery("select l from LoanItem l", LoanItem.class).getResultList();
+        } catch (Exception e){
+            throw new DataAccessException(e);
+        }
     }
 
 }

@@ -98,14 +98,14 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
     }
 
 
-    @Test(expectedExceptions = {InvalidDataAccessApiUsageException.class})
-    public void createNull() {
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void createNull()  throws DataAccessException {
         loanDao.create(null);
     }
 
 
     @Test
-    public void create() {
+    public void create()  throws DataAccessException {
 
         loanDao.create(l1);
 
@@ -115,7 +115,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
 
 
     @Test
-    public void delete() {
+    public void delete()  throws DataAccessException {
         List<Loan> loansMock = new ArrayList<>();
 
         em.persist(l1);
@@ -123,27 +123,27 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
         loansMock.add(l1);
 
         List<Loan> loans = em.createQuery("select b from Loan b", Loan.class).getResultList();
-        Assert.assertEquals(loans, loansMock);
-        em.remove(l1i1);
+        em.remove(l1i1);        Assert.assertEquals(loans, loansMock);
+
         loanDao.delete(l1);
         loans = em.createQuery("select b FROM Loan b", Loan.class).getResultList();
         Assert.assertEquals(loans.size(), 0);
     }
 
 
-    @Test(expectedExceptions = {InvalidDataAccessApiUsageException.class})
-    public void deleteNotExisting() {
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void deleteNotExisting()  throws DataAccessException {
         loanDao.delete(l1);
     }
 
 
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void deleteNull() {
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void deleteNull()  throws DataAccessException {
         loanDao.delete(null);
     }
 
     @Test
-    public void findById() {
+    public void findById()  throws DataAccessException {
         em.persist(l1);
 
         List<Loan> loans = em.createQuery("select l from Loan l where l.id=:id", Loan.class).setParameter("id", l1.getId()).getResultList();
@@ -153,7 +153,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void update() {
+    public void update()  throws DataAccessException {
 
         em.persist(l1);
 
@@ -183,7 +183,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void findAll() {
+    public void findAll()  throws DataAccessException {
         List<Loan> loansMock = new ArrayList<>();
 
         em.persist(l1);
@@ -194,7 +194,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void allLoansOfMember() {
+    public void allLoansOfMember()  throws DataAccessException {
         em.persist(l1);
 
         List<Loan> loansMember = loanDao.allLoansOfMember(member);
@@ -203,8 +203,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests{
         Assert.assertEquals(loansMember, loans);
     }
 
-    @Test(expectedExceptions = {InvalidDataAccessApiUsageException.class})
-    public void allLoansOfMemberNoneExisting() {
+    @Test(expectedExceptions = {DataAccessException.class})
+    public void allLoansOfMemberNoneExisting()  throws DataAccessException {
         loanDao.allLoansOfMember(null);
     }
 

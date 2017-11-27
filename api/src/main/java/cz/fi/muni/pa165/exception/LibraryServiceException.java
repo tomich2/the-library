@@ -12,4 +12,8 @@ public class LibraryServiceException extends RuntimeException {
         super(msg, ex);
     }
 
+    public LibraryServiceException(String msg, Exception ex){
+        super(msg, ex);
+    }
+
 }

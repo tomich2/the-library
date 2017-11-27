@@ -105,10 +105,7 @@ public class CreateMemberDTO {
             return false;
         }
         final CreateMemberDTO other = (CreateMemberDTO) obj;
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.email, other.email);
     }
   
     

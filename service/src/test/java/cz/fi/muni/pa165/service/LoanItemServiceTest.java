@@ -4,6 +4,7 @@ import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.dao.LoanItemDao;
 import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
 
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,20 +39,20 @@ public class LoanItemServiceTest {
     }
 
     @Test
-    public void createTest() {
+    public void createTest() throws DataAccessException {
         Long loanItemId = loanItemService.create(loanItem);
         Mockito.verify(loanItemDao, ONCE).create(loanItem);
         Assert.assertEquals(loanItem.getId(), loanItemId);
     }
 
     @Test(expected = LibraryServiceException.class)
-    public void createWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void createWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(loanItemDao).create(loanItem);
         loanItemService.create(loanItem);
     }
 
     @Test
-    public void updateTest() {
+    public void updateTest() throws DataAccessException {
         loanItemService.update(loanItem);
         Mockito.verify(loanItemDao, ONCE).update(loanItem);
     }
@@ -59,25 +60,25 @@ public class LoanItemServiceTest {
 
 
     @Test(expected = LibraryServiceException.class)
-    public void updateWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void updateWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(loanItemDao).update(loanItem);
         loanItemService.update(loanItem);
     }
 
     @Test
-    public void deleteTest() {
+    public void deleteTest() throws DataAccessException {
         loanItemService.delete(loanItem);
         Mockito.verify(loanItemDao, ONCE).delete(loanItem);
     }
 
     @Test(expected = LibraryServiceException.class)
-    public void deleteWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void deleteWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(loanItemDao).delete(loanItem);
         loanItemService.delete(loanItem);
     }
 
     @Test
-    public void findByIdTest() {
+    public void findByIdTest() throws DataAccessException {
         Mockito.when(loanItemService.findById(loanItem.getId())).thenReturn(loanItem);
         LoanItem foundLoanItem = loanItemService.findById(loanItem.getId());
 
@@ -86,13 +87,13 @@ public class LoanItemServiceTest {
     }
 
     @Test(expected = LibraryServiceException.class)
-    public void findByIdWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void findByIdWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(loanItemDao).findById(loanItem.getId());
         loanItemService.findById(loanItem.getId());
     }
 
     @Test
-    public void findAllTest() {
+    public void findAllTest() throws DataAccessException {
         List<LoanItem> loanItemList = new ArrayList<LoanItem>();
         loanItemList.add(loanItem);
         Mockito.when(loanItemService.findAll()).thenReturn(loanItemList);
@@ -103,7 +104,7 @@ public class LoanItemServiceTest {
     }
 
     @Test(expected = LibraryServiceException.class)
-    public void findAllWrapsRuntimeExceptionToPersistenceExceptionTest() {
+    public void findAllWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(loanItemDao).findAll();
         loanItemService.findAll();
     }

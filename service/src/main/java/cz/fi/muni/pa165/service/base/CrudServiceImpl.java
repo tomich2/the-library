@@ -4,6 +4,7 @@ package cz.fi.muni.pa165.service.base;
 import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
 import cz.fi.muni.pa165.library.persistance.entity.base.EntityBase;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class CrudServiceImpl<TEntity extends EntityBase> implements CrudService<
             return crudDao.findById(id);
         } catch(RuntimeException exception) {
             throw new LibraryServiceException("Exception while finding entity by id", exception);
+        } catch (DataAccessException exception) {
+            throw new LibraryServiceException("Exception while finding entity by id", exception);
         }
     }
 
@@ -39,6 +42,8 @@ public class CrudServiceImpl<TEntity extends EntityBase> implements CrudService<
             return crudDao.findAll();
         } catch (RuntimeException exception) {
             throw new LibraryServiceException("Exception while finding all entities", exception);
+        } catch (DataAccessException exception) {
+            throw new LibraryServiceException("Exception while finding entity by id", exception);
         }
     }
 
@@ -49,6 +54,8 @@ public class CrudServiceImpl<TEntity extends EntityBase> implements CrudService<
             return entity.getId();
         } catch(RuntimeException exception) {
             throw new LibraryServiceException("Exception while creating entity", exception);
+        } catch (DataAccessException exception) {
+            throw new LibraryServiceException("Exception while finding entity by id", exception);
         }
     }
 
@@ -58,6 +65,8 @@ public class CrudServiceImpl<TEntity extends EntityBase> implements CrudService<
             crudDao.update(entity);
         } catch(RuntimeException exception) {
             throw new LibraryServiceException("Exception while updating entity", exception);
+        } catch (DataAccessException exception) {
+            throw new LibraryServiceException("Exception while finding entity by id", exception);
         }
     }
 
@@ -67,6 +76,8 @@ public class CrudServiceImpl<TEntity extends EntityBase> implements CrudService<
             crudDao.delete(entity);
         } catch(RuntimeException exception) {
             throw new LibraryServiceException("Exception while deleting entity", exception);
+        } catch (DataAccessException exception) {
+            throw new LibraryServiceException("Exception while finding entity by id", exception);
         }
     }
 }
