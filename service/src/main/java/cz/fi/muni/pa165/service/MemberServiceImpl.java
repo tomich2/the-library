@@ -1,8 +1,10 @@
 package cz.fi.muni.pa165.service;
 
 import cz.fi.muni.pa165.exception.LibraryServiceException;
+import cz.fi.muni.pa165.library.persistance.dao.LoanDao;
 import cz.fi.muni.pa165.library.persistance.dao.MemberDao;
 import cz.fi.muni.pa165.library.persistance.dao.base.CrudDao;
+import cz.fi.muni.pa165.library.persistance.entity.Loan;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import cz.fi.muni.pa165.service.base.CrudServiceImpl;
@@ -10,6 +12,9 @@ import javax.inject.Named;
 
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -20,6 +25,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Named
 public class MemberServiceImpl extends CrudServiceImpl<Member> implements MemberService {
+
+
+    @Inject
+    private LoanDao loanDao;
 
     @Inject
     MemberDao memberDao;
@@ -56,6 +65,20 @@ public class MemberServiceImpl extends CrudServiceImpl<Member> implements Member
         }
         member.setIsAdmin(true);
         memberDao.update(member);
+    }
+
+    /**
+     * Active members are those who loaned at least one book
+     * @throws DataAccessException
+     */
+    public Set<Member> getActiveMembers() throws DataAccessException {
+        Set<Member> activeMembers = new HashSet<>();
+
+        for(Loan loan : loanDao.findAll()) {
+            activeMembers.add(loan.getMember());
+        }
+
+        return activeMembers;
     }
     
 }

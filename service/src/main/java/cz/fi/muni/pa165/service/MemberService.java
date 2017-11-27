@@ -3,6 +3,9 @@ import  cz.fi.muni.pa165.library.persistance.entity.Member;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import cz.fi.muni.pa165.service.base.CrudService;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+
 /**
  *
  * @author Tomáš Chomo tchomo
@@ -30,6 +33,8 @@ public interface MemberService extends CrudService<Member>{
      * @param member to make admin
      */
     void makeAdmin(Member member) throws DataAccessException;
+
+    Set<Member> getActiveMembers() throws DataAccessException;
     
     
 }
