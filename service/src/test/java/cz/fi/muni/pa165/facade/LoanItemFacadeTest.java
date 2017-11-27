@@ -20,6 +20,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * LoanItemFacade test.
+ * @author Michael Cada
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class LoanItemFacadeTest {
     private static VerificationMode once = times(1);

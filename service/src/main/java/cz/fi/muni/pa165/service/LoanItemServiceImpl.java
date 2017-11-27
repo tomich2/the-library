@@ -3,6 +3,7 @@ package cz.fi.muni.pa165.service;
 import cz.fi.muni.pa165.library.persistance.dao.LoanItemDao;
 import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
 import cz.fi.muni.pa165.service.base.CrudServiceImpl;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,7 +13,7 @@ import javax.inject.Named;
  *
  * @author Michael Cada
  */
-@Named
+@Service
 public class LoanItemServiceImpl extends CrudServiceImpl<LoanItem> implements LoanItemService {
 
     private LoanItemDao loanItemDao;
