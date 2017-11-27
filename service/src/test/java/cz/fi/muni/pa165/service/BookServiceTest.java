@@ -2,6 +2,7 @@ package cz.fi.muni.pa165.service;
 
 import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.library.persistance.dao.BookDao;
+import cz.fi.muni.pa165.library.persistance.dao.LoanDao;
 import cz.fi.muni.pa165.library.persistance.entity.Book;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class BookServiceTest {
     @Mock
     private BookDao bookDao;
 
+    @Mock
+    private LoanDao loanDao;
+
     private BookService bookService;
 
     private final Book book;
@@ -38,7 +42,7 @@ public class BookServiceTest {
 
     @Before
     public void setUp() {
-        bookService = new BookServiceImpl(bookDao);
+        bookService = new BookServiceImpl(bookDao, loanDao);
         book.setId(new Long("1"));
     }
 

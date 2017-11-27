@@ -1,7 +1,11 @@
 package cz.fi.muni.pa165.service;
 
 import cz.fi.muni.pa165.exception.LibraryServiceException;
+import cz.fi.muni.pa165.library.persistance.dao.LoanDao;
 import cz.fi.muni.pa165.library.persistance.dao.MemberDao;
+import cz.fi.muni.pa165.library.persistance.entity.Book;
+import cz.fi.muni.pa165.library.persistance.entity.Loan;
+import cz.fi.muni.pa165.library.persistance.entity.LoanItem;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
 
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
@@ -14,10 +18,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.verification.VerificationMode;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 /**
  * Testing of Member service
@@ -34,16 +38,51 @@ public class MemberServiceTest {
     @Mock
     private MemberDao memberDao;
 
+    @Mock
+    private LoanDao loanDao;
+
     private MemberService memberService;
 
-    private Member member =  new Member();
+    private Member member;
+    private Loan loan1;
+    private LoanItem loanItem1;
+    private Book book1;
+    private Set<Member> members;
+
 
     @Before
     public void setUp() {
-        memberService = new MemberServiceImpl(memberDao);
+        memberService = new MemberServiceImpl(memberDao, loanDao);
+        member = new Member();
         member.setId(new Long("1"));
-    }    
-   
+
+        book1 = new Book();
+        book1.setAuthor("Author");
+        book1.setTitle("Title");
+
+        loan1 = new Loan();
+        loan1.setId(1L);
+        loan1.setMember(member);
+        loan1.setLoanCreated(new Date());
+
+        Set<LoanItem> loanItems = new HashSet<>();
+        loanItem1 = new LoanItem();
+        loanItem1.setBook(book1);
+        loanItem1.setLoan(loan1);
+        loanItems.add(loanItem1);
+
+        loan1.setLoanItems(loanItems);
+
+        Set<Loan> loans = new HashSet<>();
+        loans.add(loan1);
+        member.setLoans(loans);
+
+        members = new HashSet<>();
+        members.add(member);
+
+    }
+
+
     @Test
     public void createTest() throws DataAccessException {
         Long memberId = memberService.create(member);
@@ -95,6 +134,17 @@ public class MemberServiceTest {
     public void findByIdWrapsRuntimeExceptionToPersistenceExceptionTest() throws DataAccessException {
         Mockito.doThrow(RuntimeException.class).when(memberDao).findById(member.getId());
         memberService.findById(member.getId());
+    }
+
+    @Test
+    public void activeMembersTest() throws DataAccessException {
+        List<Loan> loans = new LinkedList<Loan>();
+        loans.add(loan1);
+        when(loanDao.findAll()).thenReturn(loans);
+        Set<Member> memberSet = memberService.getActiveMembers();
+
+        Mockito.verify(loanDao, ONCE).findAll();
+        Assert.assertEquals(memberSet.size(), members.size());
     }
 
     @Test

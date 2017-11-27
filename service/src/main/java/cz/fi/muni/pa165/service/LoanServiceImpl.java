@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LoanServiceImpl extends CrudServiceImpl<Loan> implements LoanService {
-    @Inject
     private LoanDao loanDao;
 
     @Inject

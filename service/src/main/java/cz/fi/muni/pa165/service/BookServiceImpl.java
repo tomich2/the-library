@@ -28,8 +28,9 @@ public class BookServiceImpl extends CrudServiceImpl<Book> implements BookServic
     private LoanDao loanDao;
     
     @Inject
-    public BookServiceImpl(CrudDao<Book> crudDao) {
-        super(crudDao);
+    public BookServiceImpl(BookDao bookDao, LoanDao loanDao) {
+        super(bookDao);
+        this.loanDao = loanDao;
     }
 
     @Override

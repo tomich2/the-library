@@ -13,6 +13,7 @@ import javax.inject.Named;
 import javax.inject.Inject;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,19 +28,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class MemberServiceImpl extends CrudServiceImpl<Member> implements MemberService {
 
 
-    @Inject
     private LoanDao loanDao;
 
-    @Inject
     MemberDao memberDao;
     
     @Inject
     private PasswordEncoder encoder;
       
     @Inject
-    public MemberServiceImpl(CrudDao<Member> crudDao) {
-        super(crudDao);
+    public MemberServiceImpl(MemberDao memberDao, LoanDao loanDao) {
+        super(memberDao);
         this.memberDao = memberDao;
+        this.loanDao = loanDao;
     }
 
     @Override
@@ -73,11 +73,14 @@ public class MemberServiceImpl extends CrudServiceImpl<Member> implements Member
      */
     public Set<Member> getActiveMembers() throws DataAccessException {
         Set<Member> activeMembers = new HashSet<>();
+        List<Loan> loanList = loanDao.findAll();
 
-        for(Loan loan : loanDao.findAll()) {
-            activeMembers.add(loan.getMember());
+        //if not empty find active members otherwise return empty set
+        if(!loanList.isEmpty()) {
+            for(Loan loan : loanList) {
+                activeMembers.add(loan.getMember());
+            }
         }
-
         return activeMembers;
     }
     
