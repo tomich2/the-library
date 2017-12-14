@@ -36,5 +36,22 @@ public interface MemberService extends CrudService<Member>{
 
     Set<Member> getActiveMembers() throws DataAccessException;
     
+      /**
+     * Finds members by name
+     *
+     * @param email of member
+     * @return list of members
+     */
+     Member findByEmail(String email);
+    
+    /**
+     * Authenticates member if password matches the records
+     *
+     * @param member to authenticateMember
+     * @param unhashedPassword hashed password to be matched
+     * @return whether authentication was succesful
+     */
+    boolean authenticateMember(Member member, String unhashedPassword);
+    
     
 }

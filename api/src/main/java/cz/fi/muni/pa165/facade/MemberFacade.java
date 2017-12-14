@@ -40,5 +40,22 @@ public interface MemberFacade extends CrudFacade<MemberDTO> {
      * @param id of user
      */
     void makeAdmin(Long id) throws DataAccessException;
+      
+    /**
+     * Finds members by name
+     *
+     * @param email of member
+     * @return list of members
+     */
+    MemberDTO findByEmail(String email);
+
+    /**
+     * Makes authentization of member
+     *
+     * @param memberAuth DTO object containing authentication data
+     * @return true if authorization passed, else false
+     */
+    boolean authenticateMember(MemberAuthenticateDTO memberAuth);
+
     
 }

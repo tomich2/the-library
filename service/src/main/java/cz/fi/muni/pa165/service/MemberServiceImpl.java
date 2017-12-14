@@ -84,4 +84,22 @@ public class MemberServiceImpl extends CrudServiceImpl<Member> implements Member
         return activeMembers;
     }
     
+    @Override
+    public Member findByEmail(String email) {
+        List<Member> result = memberDao.findByEmail(email);
+        if (!result.isEmpty()) {
+            return result.get(0);
+        } else {
+            return null;
+        }
+    }
+    
+    @Override
+    public boolean authenticateMember(Member member, String unencryptedPassword) {
+        if (member == null) {
+            return false;
+        }
+        return member.getPasswordHash().equals(encoder.encode(unencryptedPassword));
+    }
+    
 }
