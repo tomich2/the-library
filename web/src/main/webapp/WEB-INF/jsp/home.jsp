@@ -11,7 +11,7 @@
 		<h1><c:out value="${user.getName()}"/>, welcome to kniHovna!!!</h1>
 		<p class="lead">Here you can loan books.</p>
 		<p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/loanItems/list"
-			  role="button">Go hunting!</a></p>
+			  role="button">Go reading!</a></p>
 	</div>
 </jsp:attribute>
 </my:pagetemplate>

@@ -39,7 +39,7 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 
 	@Override
 	public void loadData() throws IOException, ParseException, DataAccessException {
-		Book book = new Book();
+	/*	Book book = new Book();
 		book.setAuthor("someAuthor");
 		book.setTitle("someTitle");
 		bookService.create(book);
@@ -58,7 +58,7 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 		LoanItem loanItem = new LoanItem();
 		loanItem.setBook(book);
 		loanItem.setLoan(loan);
-
+*/
 	}
 
 }
