@@ -69,7 +69,7 @@ public class LoanItem implements EntityBase{
     @Override
     public int hashCode() {
         int result = 7;
-        result = 31 * result + getBook().hashCode();
+        result = 31 * result + (getBook() != null ? getBook().hashCode() : 0);
         result = 31 * result + (getLoan() != null ? getLoan().hashCode() : 0);
         return result;
     }
