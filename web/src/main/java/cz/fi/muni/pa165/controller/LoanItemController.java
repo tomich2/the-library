@@ -20,7 +20,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-
+/**
+ * @author mcada
+ */
 @Controller
 @RequestMapping("/loanItems")
 public class LoanItemController {
