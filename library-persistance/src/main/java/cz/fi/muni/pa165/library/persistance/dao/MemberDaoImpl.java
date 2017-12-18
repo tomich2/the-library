@@ -66,4 +66,9 @@ public class MemberDaoImpl implements MemberDao {
         }
     }
     
+    @Override
+    public List<Member> findByEmail(String email) {
+        return em.createQuery("from Member where email = :email", Member.class).setParameter("email", email).getResultList();
+    }
+    
 }

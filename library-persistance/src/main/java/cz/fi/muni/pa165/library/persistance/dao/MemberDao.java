@@ -46,4 +46,12 @@ public interface MemberDao extends CrudDao<Member> {
      * @return member with the given id
      */
     Member findById(Long id) throws DataAccessException;
+    
+    /**
+     * Finds members by name
+     *
+     * @param email of member
+     * @return list of members
+     */
+    List<Member> findByEmail(String email);
 }

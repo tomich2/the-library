@@ -3,6 +3,7 @@ package cz.fi.muni.pa165.facade;
 
 import cz.fi.muni.pa165.config.MappingService;
 import cz.fi.muni.pa165.dto.CreateMemberDTO;
+import cz.fi.muni.pa165.dto.MemberAuthenticateDTO;
 import cz.fi.muni.pa165.dto.MemberDTO;
 import cz.fi.muni.pa165.facade.base.CrudFacadeImpl;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
@@ -49,5 +50,15 @@ public class MemberFacadeImpl extends CrudFacadeImpl<MemberDTO, Member> implemen
         Member member = mapper.map(memberReg, Member.class);
         service.registerMember(member, memberReg.getPassword());
         return member.getId();
+    }
+  
+    @Override
+    public MemberDTO findByEmail(String email) {
+        return mapper.map(service.findByEmail(email), MemberDTO.class);
+    }
+    
+    @Override
+    public boolean authenticateMember(MemberAuthenticateDTO memberAuth) {
+        return service.authenticateMember(service.findByEmail(memberAuth.getMemberEmail()), memberAuth.getPassword());
     }
 }
