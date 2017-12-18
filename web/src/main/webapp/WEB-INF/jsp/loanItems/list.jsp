@@ -22,14 +22,14 @@
             <c:forEach items="${loanItems}" var="loanItem">
                 <tr>
                     <td><c:out value="${loanItem.id}"/></td>
-                    <td><c:out value="${loanItem.book}"/></td>
+                    <td><c:out value="${loanItem.book.name}"/></td>
                     <td><c:out value="${loanItem.loan}"/></td>
                     <td>
                         <my:a href="/loanItem/details/${loanItem.id}" class="btn btn-primary">Show details</my:a>
                     </td>
                     <td>
                         <c:if test="${authenticatedUser.isAdmin()}">
-                            <my:a href="/loanItem/update/${area.id}" class="btn btn-primary">Update</my:a>
+                            <my:a href="/loanItem/update/${loanItem.id}" class="btn btn-primary">Update</my:a>
                         </c:if>
                     </td>
                     <td>
