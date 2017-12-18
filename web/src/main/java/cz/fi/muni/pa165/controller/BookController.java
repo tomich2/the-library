@@ -1,7 +1,9 @@
 package cz.fi.muni.pa165.controller;
 
 import cz.fi.muni.pa165.dto.BookDTO;
+import cz.fi.muni.pa165.dto.CreateBookDTO;
 import cz.fi.muni.pa165.facade.BookFacade;
+import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,42 +44,34 @@ public class BookController {
         return "books/list";
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String createNewBook(Model model) {
-        model.addAttribute("BookCreate", new BookDTO() );
-        return "books/create";
-    }
-
-
-
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model) {
-        log.debug("view({})", id);
-        model.addAttribute("book", bookFacade.findById(id));
+        log.debug("view({})", id);  
+        model.addAttribute("books", bookFacade.findById(id));
         return "books/view";
     }
 
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@Valid @ModelAttribute("BookCreate") BookDTO formBean, BindingResult bindingResult,
-                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-        log.debug("create(BookCreate={})", formBean);
-        if (bindingResult.hasErrors()) {
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
-                log.trace("ObjectError: {}", ge);
-            }
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-                log.trace("FieldError: {}", fe);
-            }
-            return "books/create";
+    
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String createBookView(Model model) {
+        if (!model.containsAttribute("books")) {
+            model.addAttribute("books", new CreateBookDTO());
         }
-        long id = bookFacade.create(formBean);
-
-        redirectAttributes.addFlashAttribute("alert_success", "Book " + id + " was created");
-        return "redirect:" + uriBuilder.path("/books/list").toUriString();
+        model.addAttribute("action", "Create");
+        return "books/create";
     }
+    
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String createBook(@Valid @ModelAttribute("books") CreateBookDTO dto, BindingResult result, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes
+                             ) throws DataAccessException {
+        
+        Long id = bookFacade.create(dto);
+       return "redirect:" + uriBuilder.path("/books/view/{id}").buildAndExpand(id).encode().toUriString();
+    }
+
+   
 
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
