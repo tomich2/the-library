@@ -14,15 +14,17 @@
         <c:if test="${param.error != null}">
         <div>Invalid credentials.</div>
     </c:if>
-        <form method="POST">
+        <form method="POST" action="${pageContext.request.contextPath}/login/login"
+                               modelAttribute="user" cssClass="form-horizontal">
             <div class="form-group">
-                <label for="username">E-mail:</label>
-                <input name="username" type="text" class="form-control" />
+                <label for="memberEmail">E-mail:</label>
+                <input name="memberEmail" type="text" class="form-control" />
 
                 <label for="password">Password:</label>
                 <input name="password" type="password" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-default">Log in</button>
+            <input type="submit" class="btn btn-default" value="Log in" />
         </form>
+        <my:a href="/member/create">Register</my:a>
     </jsp:attribute>
 </my:pagetemplate>

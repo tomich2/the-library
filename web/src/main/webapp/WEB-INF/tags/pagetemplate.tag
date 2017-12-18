@@ -45,7 +45,7 @@
 				<c:if test="${authenticatedUser.isAdmin()}">
 					<li><my:a href="/member/list"><f:message key="navigation.admin.users"/></my:a></li>
 				</c:if>
-				<li><my:a href="/member/logoff">Log off</my:a></li>
+				<li><my:a href="/login/logoff">Log off</my:a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
