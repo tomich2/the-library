@@ -8,9 +8,9 @@
 <my:pagetemplate>
 <jsp:attribute name="body">
 	<div class="jumbotron">
-		<h1><c:out value="${user.getName()}"/>, welcome to kniHovna!!!</h1>
+		<h1>Welcome to the library!!!!</h1>
 		<p class="lead">Here you can loan books.</p>
-		<p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/loanItems/list"
+		<p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/books/list"
 			  role="button">Go reading!</a></p>
 	</div>
 </jsp:attribute>
