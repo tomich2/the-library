@@ -8,7 +8,41 @@
 <my:pagetemplate title="Loan Items">
     <jsp:attribute name="body">
 
-    tu bude tabulka s listem :)
+      <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Book</th>
+                <th>Loan Id</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${loanItems}" var="loanItem">
+                <tr>
+                    <td><c:out value="${loanItem.id}"/></td>
+                    <td><c:out value="${loanItem.book}"/></td>
+                    <td><c:out value="${loanItem.loan}"/></td>
+                    <td>
+                        <my:a href="/loanItem/details/${loanItem.id}" class="btn btn-primary">Show details</my:a>
+                    </td>
+                    <td>
+                        <c:if test="${authenticatedUser.isAdmin()}">
+                            <my:a href="/loanItem/update/${area.id}" class="btn btn-primary">Update</my:a>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${authenticatedUser.isAdmin()}">
+                            <form method="post" action="${pageContext.request.contextPath}/loanItem/delete/${loanItem.id}">
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </form>
+                        </c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
 
 
 </jsp:attribute>
