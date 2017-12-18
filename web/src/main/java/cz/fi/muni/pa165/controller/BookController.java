@@ -22,7 +22,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-
+/**
+ * @author xchomo, mcada
+ */
 @Controller
 @RequestMapping("/books")
 public class BookController {
