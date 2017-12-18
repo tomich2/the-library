@@ -28,24 +28,12 @@ public class LoanRestController {
     @Inject
     private LoanFacade loanFacade;
 
-    /**
-     * get all the categories
-     * @return list of CategoryDTOs
-     */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<LoanDTO> getLoans() throws DataAccessException {
         logger.debug("rest getLoans()");
         return loanFacade.findAll();
     }
 
-    /**
-     *
-     * Get one category specified by id
-     *
-     * @param id identifier for the category
-     * @return CategoryDTO
-     * @throws Exception ResourceNotFoundException
-     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final LoanDTO getLoan(@PathVariable("id") long id) throws Exception {
 

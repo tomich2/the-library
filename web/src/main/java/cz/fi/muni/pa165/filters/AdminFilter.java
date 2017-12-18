@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {
-        "/member/list", "/books/add", "/member/show"})
+        "/books/add", "/member/show"})
 public class AdminFilter implements Filter {
 
     @Override
