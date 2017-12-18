@@ -46,6 +46,9 @@ public interface LoanFacade {
      * @param loanId ID of loan.
      */
     void delete(Long loanId) throws DataAccessException;
-
-
+    /**
+     * Update loan.
+     * @param loanDTO Loan DTO.
+     */
+    void update(LoanDTO loanDTO) throws DataAccessException;
 }
