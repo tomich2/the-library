@@ -9,7 +9,12 @@
     <jsp:attribute name="body">
 
     tu bude tabulka s listem :)
-
+    <c:forEach items="${loanItems}" var="loanItem">
+            <tr>
+                <td>${loanItem.id}</td>
+                <td><c:out value="${loanItem.book}"/></td>
+            </tr>
+    </c:forEach>
 
 </jsp:attribute>
 </my:pagetemplate>

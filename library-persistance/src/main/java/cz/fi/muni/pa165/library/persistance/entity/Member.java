@@ -6,14 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -33,7 +26,7 @@ public class Member implements EntityBase{
     private Long id;
     
     
-    @OneToMany(mappedBy = "member")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "member")
     private Set<Loan> loans = new HashSet<>();
 
     public Set<Loan> getLoans() {

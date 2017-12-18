@@ -98,6 +98,7 @@
         <module>service</module>
         <module>web</module>
         <module>sampleData</module>
+        <module>rest</module>
     </modules>
     <dependencies>
    </dependencies>
