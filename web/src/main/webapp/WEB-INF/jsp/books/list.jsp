@@ -10,6 +10,9 @@
 
       <table class="table">
             <thead>
+            <td>
+                  <my:a href="/books/create" class="btn btn-primary">Create new book!!!</my:a>
+            </td>
             <tr>
                 <th>Id</th>
                 <th>Author</th>
@@ -22,10 +25,10 @@
             <c:forEach items="${books}" var="book">
                 <tr>
                     <td><c:out value="${book.id}"/></td>
-                    <td><c:out value="${book.name}"/></td>
+                    <td><c:out value="${book.author}"/></td>
                     <td><c:out value="${book.title}"/></td>
                     <td>
-                        <my:a href="/books/details/${book.id}" class="btn btn-primary">Show details</my:a>
+                        <my:a href="/books/view/${book.id}" class="btn btn-primary">Show details</my:a>
                     </td>
                     <td>
                         <c:if test="${authenticatedUser.isAdmin()}">
