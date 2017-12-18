@@ -60,7 +60,7 @@ public class MemberController {
         }
         List<LoanDTO> allLoans = loanFacade.allLoansOfMember(dto.getId());
         model.addAttribute("member", dto);
-        model.addAttribute("all loans", allLoans);
+        model.addAttribute("allLoans", allLoans);
         return "member/show";
     }
      
