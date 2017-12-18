@@ -89,4 +89,10 @@ public class LoanFacadeImpl implements LoanFacade {
         loanService.delete(loan);
     }
 
+    @Override
+    public void update(LoanDTO loanDTO) {
+        Loan loan = mappingService.map(loanDTO,Loan.class);
+        loanService.update(loan);
+    }
+
 }

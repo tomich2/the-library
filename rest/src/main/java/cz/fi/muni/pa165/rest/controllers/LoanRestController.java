@@ -21,9 +21,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/loans")
-public class LoanController {
+public class LoanRestController {
 
-    final static Logger logger = LoggerFactory.getLogger(LoanController.class);
+    final static Logger logger = LoggerFactory.getLogger(LoanRestController.class);
 
     @Inject
     private LoanFacade loanFacade;
@@ -34,7 +34,6 @@ public class LoanController {
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<LoanDTO> getLoans() throws DataAccessException {
-
         logger.debug("rest getLoans()");
         return loanFacade.findAll();
     }
