@@ -5,11 +5,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="${loanItems.name} Loan Item details">
+<my:pagetemplate title="# ${loanItem.id} Loan Item details">
 <jsp:attribute name="body">
     <div style="width:400px;">
         <div style="float: left; width: 130px">
-            <my:a href="/loanItems/list">Back to loanItems</my:a>
+            <my:a href="/loanItems/list" class="btn btn-primary">Back to loanItems</my:a>
         </div>
         <br>
         <br>
