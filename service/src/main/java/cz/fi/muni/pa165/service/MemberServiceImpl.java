@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -32,7 +33,6 @@ public class MemberServiceImpl extends CrudServiceImpl<Member> implements Member
 
     MemberDao memberDao;
     
-    @Inject
     private PasswordEncoder encoder;
       
     @Inject
@@ -40,7 +40,9 @@ public class MemberServiceImpl extends CrudServiceImpl<Member> implements Member
         super(memberDao);
         this.memberDao = memberDao;
         this.loanDao = loanDao;
+        this.encoder = new BCryptPasswordEncoder();
     }
+
 
     @Override
     public void registerMember(Member member, String password) throws DataAccessException {
