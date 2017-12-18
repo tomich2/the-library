@@ -3,6 +3,7 @@ package cz.fi.muni.pa165.facade;
 
 import cz.fi.muni.pa165.config.MappingService;
 import cz.fi.muni.pa165.dto.CreateMemberDTO;
+import cz.fi.muni.pa165.dto.LoanDTO;
 import cz.fi.muni.pa165.dto.MemberAuthenticateDTO;
 import cz.fi.muni.pa165.dto.MemberDTO;
 import cz.fi.muni.pa165.facade.base.CrudFacadeImpl;
@@ -12,6 +13,7 @@ import cz.fi.muni.pa165.service.MemberService;
 import javax.inject.Inject;
 
 import cz.fi.muni.pa165.service.base.CrudService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,5 +62,10 @@ public class MemberFacadeImpl extends CrudFacadeImpl<MemberDTO, Member> implemen
     @Override
     public boolean authenticateMember(MemberAuthenticateDTO memberAuth) {
         return service.authenticateMember(service.findByEmail(memberAuth.getMemberEmail()), memberAuth.getPassword());
+    }
+
+    @Override
+    public List<LoanDTO> getAllLoans(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
