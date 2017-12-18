@@ -30,11 +30,11 @@
             </tr>
             <tr>
                 <td>Title</td>
-                <td><c:out value="${book.title}"/></td>
+                <td><c:out value="${book.author}"/></td>
             </tr>
             <tr>
                 <td>Author</td>
-                <td><c:out value="${book.author}"/></td>
+                <td><c:out value="${book.title}"/></td>
             </tr>
 
         </tbody>

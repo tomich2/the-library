@@ -23,7 +23,7 @@
         </script>
     </jsp:attribute>
     <jsp:attribute name="body">
-        <form:form method="POST" onSubmit="return checkPassword()" modelAttribute="member">
+        <form:form method="post" action="${pageContext.request.contextPath}/member/create"  modelAttribute="member">
            <div class="form-group">
                 <div class="form-group">
                     <form:label path="firstName">First name</form:label>
@@ -39,6 +39,11 @@
                     <form:label path="email">E-mail</form:label>
                     <form:input path="email" type="text" cssClass="form-control" />
                     <form:errors path="email" />
+                </div>
+                <div class="form-group">
+                    <form:label path="address">Address</form:label>
+                    <form:input path="address" type="text" cssClass="form-control" />
+                    <form:errors path="address" />
                 </div>
                 <div class="form-group">
                     <form:label path="password">Password</form:label>
