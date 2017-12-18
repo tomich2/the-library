@@ -48,7 +48,7 @@ public class BookController {
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model) {
         log.debug("view({})", id);  
-        model.addAttribute("books", bookFacade.findById(id));
+        model.addAttribute("book", bookFacade.findById(id));
         return "books/view";
     }
 
