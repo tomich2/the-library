@@ -1,21 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- *//*
-
 package cz.fi.muni.pa165.controller;
 
-
 import cz.fi.muni.pa165.dto.BookDTO;
-
-import cz.fi.muni.pa165.exception.LibraryServiceException;
 import cz.fi.muni.pa165.facade.BookFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,64 +19,93 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
-*/
-/**
- *
- * @author tchomo
- *//*
+
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
-    final static Logger logger = LoggerFactory.getLogger(BookController.class);
 
-    @Inject
+    private static final Logger log = LoggerFactory.getLogger(BookController.class);
+
+    @Autowired
     private BookFacade bookFacade;
 
-    @RequestMapping(value = "/list")
-    public String getAll(Model model) {
-
-        model.addAttribute("books", bookFacade.findAll());
-        return "book/show_all";
+    @Inject
+    public BookController(BookFacade bookFacade) {
+        this.bookFacade = bookFacade;
     }
-      @RequestMapping(value = "/{id}")
-    public String getBook(@PathVariable long id, Model model) throws Exception {
 
-        logger.debug("rest getBook({})", id);
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list(Model model) {
+        model.addAttribute("books", bookFacade.findAll());
+        log.info("inside of bookController, trying to access list");
+        return "books/list";
+    }
 
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String createNewBook(Model model) {
+        model.addAttribute("BookCreate", new BookDTO() );
+        return "books/create";
+    }
+
+
+
+
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public String view(@PathVariable long id, Model model) {
+        log.debug("view({})", id);
+        model.addAttribute("book", bookFacade.findById(id));
+        return "books/view";
+    }
+
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String create(@Valid @ModelAttribute("BookCreate") BookDTO formBean, BindingResult bindingResult,
+                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+        log.debug("create(BookCreate={})", formBean);
+        if (bindingResult.hasErrors()) {
+            for (ObjectError ge : bindingResult.getGlobalErrors()) {
+                log.trace("ObjectError: {}", ge);
+            }
+            for (FieldError fe : bindingResult.getFieldErrors()) {
+                model.addAttribute(fe.getField() + "_error", true);
+                log.trace("FieldError: {}", fe);
+            }
+            return "books/create";
+        }
+        long id = bookFacade.create(formBean);
+
+        redirectAttributes.addFlashAttribute("alert_success", "Book " + id + " was created");
+        return "redirect:" + uriBuilder.path("/books/list").toUriString();
+    }
+
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+        BookDTO book = bookFacade.findById(id);
+        bookFacade.delete(id);
+        log.debug("delete({})", id);
+        redirectAttributes.addFlashAttribute("alert_success", "Book with id\"" + book.getId() + "\" was deleted.");
+        return "redirect:" + uriBuilder.path("/books/list").toUriString();
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String updateBook(@PathVariable long id, Model model) {
         BookDTO book = bookFacade.findById(id);
         if (book == null) {
-            throw new NotFound();
+            return "redirect:/books/list";
         }
         model.addAttribute("book", book);
-        return "book/show_book";
+        return "books/update";
     }
-    
-    
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String createBook(@Valid @ModelAttribute("createBook") BookDTO dto, BindingResult result,
-                             Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAtrrs) {
-        if (result.hasErrors()) {
-            redirectAtrrs.addFlashAttribute("alert_warning", "Book couldn't be created. Invalid parameters.");
-            return "redirect:" + uriBuilder.path("books/create").toUriString();
-        }
-        Long id = bookFacade.create(dto);
-        redirectAtrrs.addFlashAttribute("alert_success", "Book was successfuly created");
-        return "redirect:" + uriBuilder.path("/books/{id}").buildAndExpand(id).encode().toUriString();
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String updatebook(@ModelAttribute("book") BookDTO book, @PathVariable("id") long id,
+                                 Model model, UriComponentsBuilder uriBuilder) {
+
+        book.setId(id);
+        bookFacade.update(book);
+        log.debug(book.toString() + " updated");
+        return "redirect:" + uriBuilder.path("/books/list").toUriString();
     }
-    
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String createBook(Model model) {
-        model.addAttribute("createBook", new BookDTO());
-        return "book/create_book";
-    }
-    
-    @RequestMapping(path = "delete/{id}", method = RequestMethod.POST)
-    public String deleteCollection(@PathVariable long id) {
-        bookFacade.delete(id);
-        return "redirect:/books/list";
-    }
-    
 }
-*/

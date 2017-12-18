@@ -8,8 +8,8 @@
 <my:pagetemplate title="Add book">
 <jsp:attribute name="body">
 
-    <form:form method="post" action="${pageContext.request.contextPath}/book/create"
-               modelAttribute="newBook" cssClass="form-horizontal">
+    <form:form method="post" action="${pageContext.request.contextPath}/books/create"
+               modelAttribute="BookCreate" cssClass="form-vertical">
 
         <div class="form-group ${name_error?'has-error':''}">
             <form:label path="title" cssClass="col-sm-2 control-label">Title</form:label>
@@ -19,16 +19,16 @@
             </div>
         </div>
         <div class="form-group ${name_error?'has-error':''}">
-                    <form:label path="author" cssClass="col-sm-2 control-label">Author</form:label>
-                    <div class="col-sm-10">
-                        <form:input path="author" cssClass="form-control" required="required"/>
-                        <form:errors path="author" cssClass="help-block"/>
-                    </div>
-                </div>
-                </form:select>
+            <form:label path="author" cssClass="col-sm-2 control-label">Author</form:label>
+              <div class="col-sm-10">
+                <form:input path="author" cssClass="form-control" required="required"/>
+                <form:errors path="author" cssClass="help-block"/>
             </div>
         </div>
+                    <div class="col-sm-10">
+
         <button class="btn btn-primary" type="submit">Create book</button>
+        </div>
     </form:form>
 
 </jsp:attribute>
