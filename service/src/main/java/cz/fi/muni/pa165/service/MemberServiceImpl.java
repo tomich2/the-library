@@ -101,7 +101,7 @@ public class MemberServiceImpl extends CrudServiceImpl<Member> implements Member
         if (member == null) {
             return false;
         }
-        return member.getPasswordHash().equals(encoder.encode(unencryptedPassword));
+        return encoder.matches(unencryptedPassword, member.getPasswordHash());
     }
     
 }

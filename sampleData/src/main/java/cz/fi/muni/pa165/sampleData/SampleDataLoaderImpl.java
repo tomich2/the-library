@@ -72,16 +72,13 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 		admin.setFirstName("Admin");
 		admin.setSurname("Surname");
 		admin.setJoinedDate(new Date());
+        loanItemService.create(loanItem);
 
 		memberService.registerMember(admin, "password");
 		memberService.registerMember(member, "password");
 		memberService.makeAdmin(admin);
 		loan.setMember(member);
-		loanItemService.create(loanItem);
-		loanService.create(loan);
-
-
-
+        loanService.create(loan);
 	}
 
 
