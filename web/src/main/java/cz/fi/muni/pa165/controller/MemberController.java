@@ -26,6 +26,7 @@ import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -37,10 +38,10 @@ public class MemberController {
     
     private static final Logger log = LoggerFactory.getLogger(MemberController.class);
     
- 
-    MemberFacade memberFacade;  
-    
-    LoanFacade loanFacade;
+    @Autowired
+    private MemberFacade memberFacade;  
+    @Autowired
+    private LoanFacade loanFacade;
     
     @Inject
     public MemberController(MemberFacade memberFacade,LoanFacade loanFacade) {
@@ -76,9 +77,9 @@ public class MemberController {
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public String createMember(@Valid @ModelAttribute("member") CreateMemberDTO dto, BindingResult result, Model model) throws DataAccessException {
-        if (result.hasErrors()) {
-            return "member/create";
-        }
+//        if (result.hasErrors()) {
+//            return "member/create";
+//        }
         Long id = memberFacade.registerMember(dto);
         return "redirect:" + id;
     }
