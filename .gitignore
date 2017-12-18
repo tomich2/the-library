@@ -3,6 +3,7 @@
 /library-persistance/target/
 /service/target/
 /web/target/
+/sampleData/target/
 
 *.iml
 */*.iml

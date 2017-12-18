@@ -35,15 +35,14 @@
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li><f:message key="navigation.hunting"/></li>
-				<li><my:a href="/monster/list"><f:message key="navigation.admin.monsters"/></my:a></li>
-				<li><my:a href="/weapon/list"><f:message key="navigation.admin.weapons"/></my:a></li>
-                <li><my:a href="/user/arsenal"><f:message key="navigation.admin.arsenal"/></my:a></li>
+				<li><my:a href="/books/list"><f:message key="navigation.admin.books"/></my:a></li>
+				<li><my:a href="/loans/list"><f:message key="navigation.admin.loans"/></my:a></li>
+                <li><my:a href="/loanItems/list"><f:message key="navigation.admin.loanItems"/></my:a></li>
 
-                <li><my:a href="/area/list"><f:message key="navigation.admin.areas"/></my:a></li>
 				<c:if test="${authenticatedUser.isAdmin()}">
-					<li><my:a href="/user/list"><f:message key="navigation.admin.users"/></my:a></li>
+					<li><my:a href="/members/list"><f:message key="navigation.admin.users"/></my:a></li>
 				</c:if>
-				<li><my:a href="/user/logoff">Log off</my:a></li>
+				<li><my:a href="/members/logoff">Log off</my:a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
