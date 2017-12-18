@@ -10,6 +10,10 @@
 
       <table class="table">
             <thead>
+
+            <td>
+                  <my:a href="/loanItems/create" class="btn btn-primary">Create new loanItem</my:a>
+            </td>
             <tr>
                 <th>Id</th>
                 <th>Book</th>
@@ -19,17 +23,18 @@
             </tr>
             </thead>
             <tbody>
+
             <c:forEach items="${loanItems}" var="loanItem">
                 <tr>
                     <td><c:out value="${loanItem.id}"/></td>
-                    <td><c:out value="${loanItem.book.name}"/></td>
-                    <td><c:out value="${loanItem.loan}"/></td>
+                    <td><c:out value="${loanItem.book.title}"/></td>
+                    <td><c:out value="${loanItem.loan.id}"/></td>
                     <td>
-                        <my:a href="/loanItem/details/${loanItem.id}" class="btn btn-primary">Show details</my:a>
+                        <my:a href="/loanItems/view/${loanItem.id}" class="btn btn-primary">Show details</my:a>
                     </td>
                     <td>
                         <c:if test="${authenticatedUser.isAdmin()}">
-                            <my:a href="/loanItem/update/${loanItem.id}" class="btn btn-primary">Update</my:a>
+                            <my:a href="/loanItems/update/${loanItem.id}" class="btn btn-primary">Update</my:a>
                         </c:if>
                     </td>
                     <td>
