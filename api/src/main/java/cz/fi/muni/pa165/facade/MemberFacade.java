@@ -2,6 +2,7 @@ package cz.fi.muni.pa165.facade;
 import cz.fi.muni.pa165.dto.*;
 import cz.fi.muni.pa165.facade.base.CrudFacade;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
+import java.util.List;
 
 
 /**
@@ -56,6 +57,8 @@ public interface MemberFacade extends CrudFacade<MemberDTO> {
      * @return true if authorization passed, else false
      */
     boolean authenticateMember(MemberAuthenticateDTO memberAuth);
+
+    public List<LoanDTO> getAllLoans(Long id);
 
     
 }
