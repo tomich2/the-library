@@ -2,7 +2,8 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *//*
+
 package cz.fi.muni.pa165.controller;
 
 
@@ -25,10 +26,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
+*/
 /**
  *
  * @author tchomo
- */
+ *//*
+
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -82,3 +85,4 @@ public class BookController {
     }
     
 }
+*/

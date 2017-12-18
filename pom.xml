@@ -97,6 +97,7 @@
         <module>api</module>
         <module>service</module>
         <module>web</module>
+        <module>sampleData</module>
     </modules>
     <dependencies>
    </dependencies>
