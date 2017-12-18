@@ -22,9 +22,14 @@ import cz.fi.muni.pa165.facade.MemberFacade;
 @RequestMapping("/login")
 public class LoginController {
 
+    
+    MemberFacade memberFacade;
+    
     @Inject
-    MemberFacade userFacade;
-
+    public LoginController(MemberFacade memberFacade) {
+        this.memberFacade = memberFacade;
+    }
+    
     @RequestMapping(method = RequestMethod.GET)
     public String init(Model model) {
         return "login/login";

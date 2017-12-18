@@ -37,12 +37,15 @@
 				<li><f:message key="navigation.hunting"/></li>
 				<li><my:a href="/books/list"><f:message key="navigation.admin.books"/></my:a></li>
 				<li><my:a href="/loans/list"><f:message key="navigation.admin.loans"/></my:a></li>
+                                <li><my:a href="/member/show"><f:message key="navigation.admin.members"/></my:a></li>
+                                <li><my:a href="/member/list"><f:message key="navigation.admin.members"/></my:a></li>
+                                <li><my:a href="/login/login">Login</my:a></li>
                 <li><my:a href="/loanItems/list"><f:message key="navigation.admin.loanItems"/></my:a></li>
 
 				<c:if test="${authenticatedUser.isAdmin()}">
-					<li><my:a href="/members/list"><f:message key="navigation.admin.users"/></my:a></li>
+					<li><my:a href="/member/list"><f:message key="navigation.admin.users"/></my:a></li>
 				</c:if>
-				<li><my:a href="/members/logoff">Log off</my:a></li>
+				<li><my:a href="/member/logoff">Log off</my:a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>

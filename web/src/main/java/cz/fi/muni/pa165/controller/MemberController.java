@@ -1,4 +1,4 @@
-    /*
+     /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 @RequestMapping("/member")
 public class MemberController {
     
-    private static final Logger log = LoggerFactory.getLogger(LoanItemController.class);
+    private static final Logger log = LoggerFactory.getLogger(MemberController.class);
     
  
     MemberFacade memberFacade;  
@@ -43,46 +43,51 @@ public class MemberController {
     LoanFacade loanFacade;
     
     @Inject
-    public MemberController(MemberFacade memberFacade) {
+    public MemberController(MemberFacade memberFacade,LoanFacade loanFacade) {
         this.memberFacade = memberFacade;
+        this.loanFacade = loanFacade;
     }
   
     
     
-     @RequestMapping("/{id}")
+    @RequestMapping("/{id}")
     public String showMember(@PathVariable long id, Model model) throws DataAccessException {
         MemberDTO dto = memberFacade.findById(id);
-        
-        if (dto == null)
+        log.error("getting member...id {}",id);
+        if (dto == null){
+            log.error("DTO NULL");
             return "404";
+        }
         List<LoanDTO> allLoans = loanFacade.allLoansOfMember(dto.getId());
-//        List<LoanDTO> activeLoans = new ArrayList<>();
-//        List<LoanDTO> returnedLoans = new ArrayList<>();
-//        for (LoanDTO loan : allLoans) {
-//            if (loan.getReturned()) {
-//                returnedLoans.add(loan);
-//            } else {
-//                activeLoans.add(loan);
-//            }
-//        }
         model.addAttribute("member", dto);
         model.addAttribute("all loans", allLoans);
-//        model.addAttribute("returnedloans", returnedLoans);
         return "member/show";
     }
+     
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String createMemberView(Model model) {
-        model.addAttribute("createMember", new CreateMemberDTO());
+        if (!model.containsAttribute("member")) {
+            model.addAttribute("member", new CreateMemberDTO());
+        }
+        model.addAttribute("action", "Create");
         return "member/create";
     }
 
+
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public String createMember(@Valid @ModelAttribute CreateMemberDTO dto, BindingResult result, Model model) throws DataAccessException {
+    public String createMember(@Valid @ModelAttribute("member") CreateMemberDTO dto, BindingResult result, Model model) throws DataAccessException {
         if (result.hasErrors()) {
             return "member/create";
         }
         Long id = memberFacade.registerMember(dto);
         return "redirect:" + id;
+    }
+    
+    @RequestMapping(path = "/list", method = RequestMethod.GET)
+    public String listView(Model model) {
+        List<MemberDTO> members = memberFacade.findAll();
+        model.addAttribute("members", members);
+        return "member/list";
     }
 
 }
