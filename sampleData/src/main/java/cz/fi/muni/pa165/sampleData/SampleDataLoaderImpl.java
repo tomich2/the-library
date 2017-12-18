@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.sampleData;
+package cz.fi.muni.pa165.sampleData;
 
 import cz.fi.muni.pa165.library.persistance.entity.Book;
 import cz.fi.muni.pa165.library.persistance.entity.Loan;
@@ -15,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * @author mcada
+ * @author xtlamich
  */
 @Named
 @Transactional
@@ -32,33 +34,56 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 	private LoanItemService loanItemService;
 
 	@Inject
-	private MemberService memverService;
+	private MemberService memberService;
 
 	@Inject
 	private LoanService loanService;
 
 	@Override
 	public void loadData() throws IOException, ParseException, DataAccessException {
-	/*	Book book = new Book();
-		book.setAuthor("someAuthor");
-		book.setTitle("someTitle");
+		Book book = new Book();
+		book.setAuthor("Arthur C. Clarke");
+		book.setTitle("2001 Space Oddysey");
 		bookService.create(book);
 
-		Member mem = new Member();
-		mem.setEmail("firstName");
-		mem.setSurname("surname");
-		mem.setEmail("a@a.com");
-		mem.setAddress("some address");
-
-		memverService.registerMember(mem, "password");
-
 		Loan loan = new Loan();
-		loan.setMember(mem);
 
 		LoanItem loanItem = new LoanItem();
 		loanItem.setBook(book);
 		loanItem.setLoan(loan);
-*/
+		Set<Loan> loanSet = new HashSet<>();
+		loanSet.add(loan);
+
+
+		Member member = new Member();
+		member.setEmail("Test1@test.com");
+		member.setFirstName("Firstname");
+		member.setIsAdmin(false);
+		member.setSurname("Tester");
+		member.setAddress("address");
+		member.setJoinedDate(new Date());
+
+		loan.setLoanCreated(new Date());
+		member.setLoans(loanSet);
+
+		Member admin = new Member();
+		admin.setEmail("admin@admin.com");
+		admin.setAddress("address");
+		admin.setFirstName("Admin");
+		admin.setSurname("Surname");
+		admin.setJoinedDate(new Date());
+
+		memberService.registerMember(admin, "password");
+		memberService.registerMember(member, "password");
+		memberService.makeAdmin(admin);
+		loan.setMember(member);
+		loanItemService.create(loanItem);
+		loanService.create(loan);
+
+
+
 	}
+
+
 
 }

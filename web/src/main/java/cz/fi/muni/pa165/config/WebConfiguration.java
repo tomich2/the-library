@@ -5,7 +5,7 @@
  */
 package cz.fi.muni.pa165.config;
 
-import cz.muni.fi.pa165.sampleData.SampleDataConfiguration;
+import cz.fi.muni.pa165.sampleData.SampleDataConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

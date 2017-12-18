@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.sampleData;
+package cz.fi.muni.pa165.sampleData;
 
 import cz.fi.muni.pa165.ServiceConfig;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
