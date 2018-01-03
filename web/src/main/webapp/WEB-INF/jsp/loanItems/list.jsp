@@ -33,12 +33,12 @@
                         <my:a href="/loanItems/view/${loanItem.id}" class="btn btn-primary">Show details</my:a>
                     </td>
                     <td>
-                        <c:if test="${authenticatedUser.isAdmin()}">
+                        <c:if test="${authenticatedUser.isIsAdmin()}">
                             <my:a href="/loanItems/update/${loanItem.id}" class="btn btn-primary">Update</my:a>
                         </c:if>
                     </td>
                     <td>
-                        <c:if test="${authenticatedUser.isAdmin()}">
+                        <c:if test="${authenticatedUser.isIsAdmin()}">
                             <form method="post" action="${pageContext.request.contextPath}/loanItem/delete/${loanItem.id}">
                                 <button type="submit" class="btn btn-primary">Delete</button>
                             </form>

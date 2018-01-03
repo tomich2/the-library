@@ -13,7 +13,7 @@
         </div>
         <br>
         <br>
-        <c:if test="${authenticatedUser.isAdmin()}">
+        <c:if test="${authenticatedUser.isIsAdmin()}">
             <div style="width: 225px">
                 <form method="post" action="${pageContext.request.contextPath}/loanItems/delete/${loanItem.id}">
                     <button type="submit" class="btn btn-primary">Delete this loanItem</button>

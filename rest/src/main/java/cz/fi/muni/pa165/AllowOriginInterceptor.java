@@ -1,17 +1,12 @@
-package cz.fi.muni.pa165.rest.config;
-
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+package cz.fi.muni.pa165;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 /**
- * CORS and HTTP methods allow.
- * @author xtlamich
+ * @author mcada
  */
-
-public class AllowOriginInterceptor extends HandlerInterceptorAdapter {
-
+public class AllowOriginInterceptor extends  HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler)
@@ -21,5 +16,4 @@ public class AllowOriginInterceptor extends HandlerInterceptorAdapter {
                 "GET, POST, PUT, DELETE, OPTIONS");
         return true;
     }
-
 }
