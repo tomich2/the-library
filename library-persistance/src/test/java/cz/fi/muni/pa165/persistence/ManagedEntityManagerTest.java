@@ -10,7 +10,6 @@ import cz.fi.muni.pa165.library.persistance.entity.Book;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import org.junit.Assert;
 import org.springframework.test.annotation.DirtiesContext;

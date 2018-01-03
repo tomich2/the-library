@@ -30,14 +30,14 @@ public class LoanRestController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<LoanDTO> getLoans() throws DataAccessException {
-        logger.debug("rest getLoans()");
+        logger.info("rest getLoans()");
         return loanFacade.findAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final LoanDTO getLoan(@PathVariable("id") long id) throws Exception {
 
-        logger.debug("rest getLoan({})", id);
+        logger.info("rest getLoan({})", id);
 
         LoanDTO loanDTO = loanFacade.findById(id);
         if (loanDTO == null) {
