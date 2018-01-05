@@ -2,12 +2,11 @@ package cz.fi.muni.pa165.controller;
 
 import cz.fi.muni.pa165.dto.CreateLoanDTO;
 import cz.fi.muni.pa165.dto.LoanDTO;
-import cz.fi.muni.pa165.dto.LoanItemDTO;
 import cz.fi.muni.pa165.facade.LoanFacade;
-import cz.fi.muni.pa165.facade.LoanItemFacade;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +31,7 @@ import javax.validation.Valid;
 public class LoanController {
     private static final Logger log = LoggerFactory.getLogger(LoanItemController.class);
 
+    @Autowired
     private LoanFacade loanFacade;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)

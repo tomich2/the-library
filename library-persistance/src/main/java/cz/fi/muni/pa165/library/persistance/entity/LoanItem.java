@@ -2,12 +2,7 @@ package cz.fi.muni.pa165.library.persistance.entity;
 
 import cz.fi.muni.pa165.library.persistance.entity.base.EntityBase;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 /**
  * Entity representing relationship between Loan and Item entities
@@ -21,11 +16,11 @@ public class LoanItem implements EntityBase{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", nullable = true)
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Loan loan;
 
     public Long getId() {

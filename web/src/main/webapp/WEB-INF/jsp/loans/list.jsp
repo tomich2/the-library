@@ -33,15 +33,15 @@
                         </c:forEach>
                     )</td>
                     <td>
-                        <my:a href="/loans/details/${loan.id}" class="btn btn-primary">Show details</my:a>
+                        <my:a href="/loans/detail/${loan.id}" class="btn btn-primary">Show details</my:a>
                     </td>
                     <td>
-                        <c:if test="${authenticatedUser.isAdmin()}">
+                        <c:if test="${authenticatedUser.isIsAdmin()}">
                             <my:a href="/loans/update/${loan.id}" class="btn btn-primary">Update</my:a>
                         </c:if>
                     </td>
                     <td>
-                        <c:if test="${authenticatedUser.isAdmin()}">
+                        <c:if test="${authenticatedUser.isIsAdmin()}">
                             <form method="post" action="${pageContext.request.contextPath}/loans/delete/${loan.id}">
                                 <button type="submit" class="btn btn-primary">Delete</button>
                             </form>

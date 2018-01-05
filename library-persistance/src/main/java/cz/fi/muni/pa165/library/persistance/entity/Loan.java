@@ -1,5 +1,9 @@
 package cz.fi.muni.pa165.library.persistance.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import cz.fi.muni.pa165.library.persistance.entity.base.EntityBase;
 
 import java.util.Date;
@@ -30,16 +34,16 @@ public class Loan implements EntityBase{
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date loanReturned;
-    
+
     @NotNull
     @ManyToOne
     private Member member;
-    
+
     @NotNull
     @Column(nullable = false)
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "loan")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loan")
     private Set<LoanItem> loanItems = new HashSet<>();
-    
+
     public Long getId() {
         return id;
     }

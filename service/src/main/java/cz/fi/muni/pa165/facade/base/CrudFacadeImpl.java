@@ -1,8 +1,9 @@
 package cz.fi.muni.pa165.facade.base;
 
+import cz.fi.muni.pa165.config.MappingService;
 import cz.fi.muni.pa165.library.persistance.entity.base.EntityBase;
 import cz.fi.muni.pa165.service.base.CrudService;
-import cz.fi.muni.pa165.config.MappingService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  *
  * @author Michael Cada
  */
+@Transactional
 public class CrudFacadeImpl<TEntityDTO, TEntity extends EntityBase> implements CrudFacade<TEntityDTO> {
 
     private CrudService<TEntity> crudService;
