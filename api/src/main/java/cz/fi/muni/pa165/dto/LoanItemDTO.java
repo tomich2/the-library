@@ -1,6 +1,7 @@
 package cz.fi.muni.pa165.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Data transfer object for LoanItem.
@@ -13,6 +14,7 @@ public class LoanItemDTO {
 
     private BookDTO book;
 
+    @JsonIgnore
     private LoanDTO loan;
 
     public Long getId() {

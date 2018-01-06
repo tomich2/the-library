@@ -1,5 +1,7 @@
 package cz.fi.muni.pa165.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -18,10 +20,12 @@ public class LoanDTO {
         return id;
     }
 
+    @JsonIgnore
     public MemberDTO getMember() {
         return member;
     }
 
+    @JsonIgnore
     public Set<LoanItemDTO> getLoanItems() {
         return loanItems;
     }

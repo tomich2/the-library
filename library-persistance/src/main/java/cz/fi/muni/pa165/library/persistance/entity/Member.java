@@ -2,13 +2,13 @@ package cz.fi.muni.pa165.library.persistance.entity;
 
 import cz.fi.muni.pa165.library.persistance.entity.base.EntityBase;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 /**
  * Entity representing member of library
@@ -24,9 +24,9 @@ public class Member implements EntityBase{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "member")
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
     private Set<Loan> loans = new HashSet<>();
 
     public Set<Loan> getLoans() {
