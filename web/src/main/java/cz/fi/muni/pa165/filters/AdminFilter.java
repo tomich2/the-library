@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {
-        "/books/add", "/member/show"})
+        "/books/add", "/member/list"})
 public class AdminFilter implements Filter {
 
     @Override
@@ -27,7 +27,7 @@ public class AdminFilter implements Filter {
             return;
         }
 
-        if (!member.isIsAdmin()) {
+        if (!member.isAdmin()) {
             response.sendRedirect(request.getContextPath() + "/");
             return;
         }
