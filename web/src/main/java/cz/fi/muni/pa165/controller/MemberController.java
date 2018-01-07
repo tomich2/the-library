@@ -27,6 +27,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -65,7 +66,19 @@ public class MemberController {
         model.addAttribute("allLoans", allLoans);
         return "member/show";
     }
-     
+    
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+        public String delete(@PathVariable long id,
+                         Model model,
+                         UriComponentsBuilder uriBuilder,
+                         RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = memberFacade.findById(id);
+        log.error("deleting member...id {}",id);
+        memberFacade.delete(id);
+        redirectAttributes.addFlashAttribute("alert_success", "Member " + memberDTO.getEmail()+ " was deleted.");
+        return "redirect:" + uriBuilder.path("/member/list").toUriString();
+    }
+    
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String createMemberView(Model model) {
         if (!model.containsAttribute("member")) {
@@ -77,11 +90,14 @@ public class MemberController {
 
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public String createMember(@Valid @ModelAttribute("member") CreateMemberDTO dto, BindingResult result, Model model) throws DataAccessException {
-//        if (result.hasErrors()) {
-//            return "member/create";
-//        }
+    public String createMember(@Valid @ModelAttribute("member") CreateMemberDTO dto,
+                                BindingResult result,
+                                Model model, 
+                                UriComponentsBuilder uriBuilder,
+                                RedirectAttributes redirectAttributes) throws DataAccessException {
+
         Long id = memberFacade.registerMember(dto);
+        redirectAttributes.addFlashAttribute("alert_success", "Member " + dto.getEmail()+ " was created.");
         return "redirect:" + id;
     }
     

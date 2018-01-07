@@ -52,9 +52,14 @@
                 <td>Date of registration</td>
                 <td><c:out value="${member.joinedDate}"/></td>
             </tr>
-
+             
         </tbody>
+        
     </table>
+            
+            <form method="post" action="${pageContext.request.contextPath}/member/delete/${member.id}">
+                <button type="submit" class="btn btn-default">Delete</button>
+            </form>
 <br/>
     </jsp:attribute>
 </x:pagetemplate>
