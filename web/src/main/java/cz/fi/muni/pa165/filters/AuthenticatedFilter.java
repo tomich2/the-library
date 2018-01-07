@@ -27,18 +27,13 @@ public class AuthenticatedFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpServletResponse response = (HttpServletResponse) s;
 
-        String email = (String) request.getSession().getAttribute("authenticatedEmail");
-        if (email == null) {
-            response.sendRedirect("/pa165/login/login");
+        MemberDTO member = (MemberDTO) request.getSession().getAttribute("authenticatedUser");
+
+        if (member == null) {
+            response.sendRedirect(request.getContextPath() + "/login/login");
             return;
         }
-        MemberFacade memberFacade = WebApplicationContextUtils.getWebApplicationContext(r.getServletContext()).getBean(MemberFacade.class);
-        MemberDTO user = memberFacade.findByEmail(email);
-        if (user == null) {
-            response.sendRedirect("/pa165/login/login");
-            return;
-        }
-        request.setAttribute("authenticatedUser", user);
+
         chain.doFilter(request, response);
     }
 
