@@ -79,11 +79,11 @@ public class MemberDTO {
         this.joinedDate = joinedDate;
     }
 
-    public boolean isIsAdmin() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
+    public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 

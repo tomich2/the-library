@@ -19,6 +19,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author xtlamich
@@ -27,7 +29,9 @@ import java.util.Set;
 @Transactional
 public class SampleDataLoaderImpl implements SampleDataLoader {
 
-	@Inject
+        private static final Logger log = LoggerFactory.getLogger(SampleDataLoaderImpl.class);
+	
+        @Inject
 	private BookService bookService;
 
 	@Inject
@@ -71,12 +75,16 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 		admin.setAddress("address");
 		admin.setFirstName("Admin");
 		admin.setSurname("Surname");
+                log.error("Admin Status in SampleDataLoaded of member.isAdmin BEFORE MAKING HIM ADMIN ... {}",admin.isAdmin());
+               // admin.setIsAdmin(true);
+                log.error("Admin Status in SampleDataLoaded of member.isAdmin AFTER  admin.setIsAdmin(true); ... {}",admin.isAdmin());
 		admin.setJoinedDate(new Date());
         loanItemService.create(loanItem);
 
 		memberService.registerMember(admin, "password");
 		memberService.registerMember(member, "password");
 		memberService.makeAdmin(admin);
+                log.error("Admin Status in SampleDataLoaded of member.isAdmin AFTER  memberService.makeAdmin(admin);; ... {}",admin.isAdmin());
 		loan.setMember(member);
         loanService.create(loan);
 	}

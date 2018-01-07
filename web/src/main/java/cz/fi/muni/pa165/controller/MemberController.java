@@ -55,6 +55,7 @@ public class MemberController {
     public String showMember(@PathVariable long id, Model model) throws DataAccessException {
         MemberDTO dto = memberFacade.findById(id);
         log.error("getting member...id {}",id);
+        log.error("Member Admin status in Member Controller.java in showMember()  calling dto.isIsAdmin() .... {}",dto.isAdmin());
         if (dto == null){
             log.error("DTO NULL");
             return "404";

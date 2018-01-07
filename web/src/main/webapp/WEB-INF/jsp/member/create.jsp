@@ -7,7 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%--  <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%> --%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="x"%>
 <x:pagetemplate title="Create member">
     <jsp:attribute name="head">
@@ -57,14 +57,14 @@
                         Passwords do not match
                     </span>
                 </div>
-                <sec:authorize access="hasRole('ADMIN')">
+                <%-- <sec:authorize access="hasRole('ADMIN')">
                     <div class="checkbox">
                         <form:label path="admin">
                             <form:checkbox path="admin" />
                         </form:label>
                         <form:errors path="admin" />
                     </div>
-                </sec:authorize>
+                </sec:authorize>--%>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
           
