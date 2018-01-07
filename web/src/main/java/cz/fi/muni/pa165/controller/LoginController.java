@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import cz.fi.muni.pa165.dto.CreateMemberDTO;
 import cz.fi.muni.pa165.dto.MemberAuthenticateDTO;
+import cz.fi.muni.pa165.dto.MemberDTO;
 import cz.fi.muni.pa165.library.persistance.entity.Member;
 import cz.fi.muni.pa165.library.persistance.exceptions.DataAccessException;
 import cz.fi.muni.pa165.service.MemberService;
@@ -17,11 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cz.fi.muni.pa165.facade.MemberFacade;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
@@ -49,21 +52,35 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST )
-    public String login(@Valid @ModelAttribute("user") MemberAuthenticateDTO dto, BindingResult result, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder) throws DataAccessException {
+    public String login(@Valid @ModelAttribute("user") MemberAuthenticateDTO memberAuthForm, RedirectAttributes redirectAttributes, BindingResult result, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder) throws DataAccessException {
         if (result.hasErrors()) {
-            return "member/create";
-        }
-        if(!memberFacade.authenticateMember(dto)){
-            model.addAttribute("alert_danger", "Invalid login attempt");
+            for (FieldError error : result.getFieldErrors()) {
+                model.addAttribute(error.getField() + "_error", true);
+            }
+
+            model.addAttribute("user", new CreateMemberDTO());
             return "login/login";
         }
-        request.getSession().setAttribute("authenticatedEmail", dto.getMemberEmail());
-        return "redirect:" + uriBuilder.path("").toUriString();
+
+        MemberDTO found = memberFacade.findByEmail(memberAuthForm.getMemberEmail());
+
+        if (found == null || !memberFacade.authenticateMember(memberAuthForm)) {
+            redirectAttributes.addFlashAttribute("alert_warning", "Login with email " + memberAuthForm.getMemberEmail()
+                    + " has failed. Wrong password?");
+            return "redirect:" + uriBuilder.path("/login/login").toUriString();
+        }
+
+        request.getSession().setAttribute("authenticatedUser", found);
+
+
+        redirectAttributes.addFlashAttribute("alert_success", "Logged in successfully");
+        return "redirect:" + uriBuilder.path("/").toUriString();
+
     }
 
     @RequestMapping(value = "/logoff",method = RequestMethod.GET )
     public String logoff(HttpServletRequest request, UriComponentsBuilder uriBuilder) throws DataAccessException {
-        request.getSession().removeAttribute("authenticatedEmail");
-        return "redirect:" + uriBuilder.path("/login/login").toUriString();
+        request.getSession().removeAttribute("authenticatedUser");
+        return "redirect:/";
     }
 }

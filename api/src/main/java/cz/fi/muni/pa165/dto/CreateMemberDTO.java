@@ -34,7 +34,7 @@ public class CreateMemberDTO {
     @Size(min = 6, max = 50)
     private String password;
 
-    private boolean admin;
+    private boolean isAdmin;
     
 
     public String getAddress() {
@@ -78,11 +78,11 @@ public class CreateMemberDTO {
     }
 
     public boolean isAdmin() {
-        return admin;
+        return isAdmin;
     }
 
     public void setAdmin(boolean admin) {
-        this.admin = admin;
+        this.isAdmin = admin;
     }
     
 

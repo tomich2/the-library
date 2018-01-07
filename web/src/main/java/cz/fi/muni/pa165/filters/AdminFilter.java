@@ -20,21 +20,15 @@ public class AdminFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpServletResponse response = (HttpServletResponse) s;
 
-        Object emailObject = request.getSession().getAttribute("authenticatedEmail");
-        if (emailObject == null) {
-            response.sendRedirect("/pa165/login/login");
+        MemberDTO member = (MemberDTO) request.getSession().getAttribute("authenticatedUser");
+
+        if (member == null) {
+            response.sendRedirect(request.getContextPath() + "/login/login");
             return;
         }
-        String email = (String) emailObject;
-        MemberFacade userFacade = WebApplicationContextUtils.getWebApplicationContext(r.getServletContext()).getBean(MemberFacade.class);
-        MemberDTO memberDTO = userFacade.findByEmail(email);
-        if (memberDTO == null) {
-            response.sendRedirect("/pa165/login/login");
-            return;
-        }
-        if (!memberDTO.isIsAdmin()) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().println("<html><body><h1>401 Unauthorized</h1> Only admin can view this page</body></html>");
+
+        if (!member.isIsAdmin()) {
+            response.sendRedirect(request.getContextPath() + "/");
             return;
         }
         chain.doFilter(request, response);
