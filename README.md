@@ -18,3 +18,10 @@ cd the-library
 mvn clean
 mvn install
 ```
+<b> Login information to dummy accounts <b>
+  -----
+With those credentials you can log in to the created accounts.
+```
+test1@test.com - password
+admin@admin.com - password
+```
