@@ -17,6 +17,9 @@ Then you can build the project simply by executing these commands from the direc
 cd the-library
 mvn clean
 mvn install
+cd web
+mvn tomcat7:run
+http://localhost:8080/pa165/
 ```
 <b> Login information to dummy accounts <b>
   -----
@@ -26,6 +29,12 @@ test1@test.com - password
 admin@admin.com - password
 ```
 #  REST
+  ```
+mvn clean
+mvn install
+cd rest
+mvn tomcat7:run
+  ```
 
 ## Books
 http://localhost:8080/pa165/rest/books/
